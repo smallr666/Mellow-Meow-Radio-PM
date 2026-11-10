@@ -5,12 +5,12 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.10-2",
+  version: "2026.11.10-4",
   updated: "2026-11-10",
 
   rules: [
     "主力只經營 YouTube 和 Instagram，Threads 只用 IG 發文時的「分享到 Threads」順手帶過。",
-    "一首歌，同一個平台最多 2 則：YT＝歌詞影片＋1 支 Short；IG＝1 支 Reel＋1 則輪播。",
+    "一首歌，同一個平台最多 2 則：YT＝歌詞影片＋1 支 Short；IG＝1 支 Reel＋1 則歌詞互動圖卡。",
     "語氣像在超市後門一起放空的同事：不勵志、不雞湯、有點累但會笑。",
     "固定互動：「用一句話形容你今天」，每首歌挑幾則寫進下一首，並在說明欄標註。說到要做到。",
     "不講創作過程，不用藝術家口吻。我們都是普通上班族。"
@@ -73,28 +73,30 @@ window.MM_DATA = {
       tasks: [
         {
           id: "b1",
-          title: "選定影片標題",
+          title: "標題已定案（方案 A：下班那一刻）",
           tag: "YT",
-          detail: "三個選項在「發布」分頁，推薦 A：La La｜今天也是靠一杯珍奶活下來的 🧋"
+          detail: "標題：La La｜打卡下班的那一刻 ☁️ Original Lo-fi。在「發布」分頁複製，勾起來就好。"
         },
         {
           id: "b2",
-          title: "YT 縮圖右側加一行中文：今天也是靠珍奶活下來的",
+          title: "用 GPT 在現有縮圖上加一行中文",
           tag: "YT",
-          detail: "台灣觀眾滑過時，「La La」本身沒有資訊量，中文那一句才是點擊理由。字體用思源宋體或霞鶩文楷，奶油白。"
+          detail: "上傳原本的 La_La_YT-Cover.jpg 給 GPT，貼上「發布」分頁的「縮圖 GPT Prompt」（已經換成方案 A 的「下班了，這段時間是你的」）。中文出錯的話，改到 Canva 用思源宋體自己加。",
+          steps: ["在 GPT 上傳 La_La_YT-Cover.jpg", "貼上「縮圖 GPT Prompt」", "檢查中文有沒有錯字、其他文字有沒有被改動", "沒問題就存成 1280×720 以上，上傳時當縮圖"]
         },
         {
           id: "b3",
-          title: "剪 1 支直式短片（Short 和 Reel 共用）",
+          title: "檢查 Claude 做好的直式短片（Short 和 Reel 共用）",
           tag: "9:16",
-          detail: "用副歌段落 15–20 秒。第 0 秒就要有字卡，不要從前奏淡入。",
-          steps: ["從歌詞影片剪出副歌「La la, let's go walking」約 15–20 秒", "裁成 9:16（1080×1920）", "0 秒字卡：打卡下班後的第一口珍奶", "副歌進來時換字卡：La la～ 明天的事明天再說", "匯出一支，YT 和 IG 都用這支"]
+          detail: "Claude 已經做好 LaLa_Short.mp4：21 秒、1080×1920，用最後一段副歌，結尾停在「Sunny day, stay with me」。字卡依序是「下班後」→「給自己一首歌的時間」→「好好放鬆」（不提珍奶，封面當意象就好）。",
+          steps: ["用手機戴耳機看一次，確認聲音和歌詞對得上", "確認字卡沒有被 YT／IG 的按鈕擋住", "想換字卡文字就告訴 Claude，重新輸出很快"]
         },
         {
           id: "b4",
-          title: "做 IG 歌詞卡輪播 5 張（上班族翻譯版）",
+          title: "做 IG 歌詞填空卡「La la, no more ＿＿」",
           tag: "IG 4:5",
-          detail: "文字內容在「發布」分頁。背景用 La La 封面的天空藍，Canva 開 1080×1350。"
+          detail: "一張圖：把歌詞「La la, no more worries」的 worries 挖空，讓觀眾填自己最想 no more 的事。內容在「發布」分頁。Canva 開 1080×1350，用 La La 的天空藍和奶油白，英文用 Cormorant Garamond、La la 用手寫體。",
+          steps: ["Canva 開 1080×1350，背景用 La La 封面的天空藍（可以放模糊雲朵）", "上方小字：La La｜歌詞填空", "中間大字：La la, no more ________", "下面一行中文：La la，＿＿＿ 都先別管了", "底部小字：你最想 no more 的是什麼？留言填空 ☁️", "匯出 PNG"]
         },
         {
           id: "b5",
@@ -156,9 +158,9 @@ window.MM_DATA = {
         },
         {
           id: "d2",
-          title: "週一 21:00 發 IG 歌詞卡輪播",
+          title: "週一 21:00 發 IG 歌詞填空卡",
           tag: "IG",
-          detail: "週一晚上發「週一，撐住」的文案剛好。記得打開分享到 Threads。"
+          detail: "週一晚上最多人想 no more 點什麼。文案在「發布」分頁，記得打開分享到 Threads。"
         },
         {
           id: "d3",
@@ -223,83 +225,48 @@ window.MM_DATA = {
           date: "11/23（一）21:00",
           items: [
             { platform: "YT", what: "Short（同一支短片）", task: "d1" },
-            { platform: "IG", what: "歌詞卡輪播（週一，撐住）", task: "d2" }
+            { platform: "IG", what: "歌詞填空圖卡（La la, no more ＿＿）", task: "d2" }
           ]
         }
       ],
       copy: [
         {
-          label: "影片標題（三選一，推薦 A）",
+          label: "定案：方案 A｜下班那一刻",
           platform: "YT",
-          text: `A：La La｜今天也是靠一杯珍奶活下來的 🧋 Original Lo-fi
-B：La La｜下班後，假裝今天是晴天 ☁️ lo-fi lyric video
-C：La La — sunny day, stay with me｜撐完這週，去喝珍奶吧 🧋`
+          text: `標題：La La｜打卡下班的那一刻 ☁️ Original Lo-fi
+縮圖：下班了，這段時間是你的`
         },
         {
           label: "影片說明欄",
           platform: "YT",
-          text: `今天也是靠一杯珍奶活下來的。
-
-〈La La〉是一首假裝自己在放假的歌。
-明天當然還是要上班，
-但這幾分鐘，可以假裝外面是晴天、手上有珍奶、行事曆是空的。
+          text: `下班後，給自己一首歌的時間，
+誰的訊息都先不用回。
 
 💬 留言用一句話形容你今天，可能會被寫進下一首歌。
 🎧 新歌每隔週五上線｜https://www.youtube.com/@MellowMeow-Radio
 📷 IG｜https://www.instagram.com/mellowmeow.radio/
 
-───────────
-🎵 Lyrics 歌詞
-
-Sunlight on my window｜陽光灑在我的窗邊
-Pack a little lunch to go｜帶上一份小小的午餐
-Sneakers tied, I'm out the door｜綁好球鞋，推門出發
-Something sweet is in store｜有些甜甜的事在等著我
-
-La la, let's go walking｜La la，我們去散步吧
-Under skies so blue｜在這片好藍的天空下
-La la, no more worries｜La la，煩惱都先別管了
-Just me and you｜只有我和你
-
-Bubble tea and city trains｜珍珠奶茶和城市電車
-Dancing down the little lanes｜在小巷裡輕輕跳著舞
-Every corner, something new｜每個轉角都有新發現
-Every color feels like you｜每一種顏色都像你
-
-La la, let's go walking｜La la，我們去散步吧
-Under skies so blue｜在這片好藍的天空下
-La la, no more worries｜La la，煩惱都先別管了
-Just me and you｜只有我和你
-
-Clouds are drifting slow｜雲慢慢地飄
-Let the breezes go｜讓微風隨意地吹
-Hold my hand and see｜牽著我的手看看
-How light the world can be｜這世界原來可以這麼輕
-
-Picnic blanket on the grass｜野餐墊鋪在草地上
-Watch the little moments pass｜看著小小的時光溜過
-Laughing till the sun goes down｜一路笑到太陽下山
-Golden light across the town｜金色的光灑滿整座城
-
-La la, let's go walking｜La la，我們去散步吧
-Under skies so blue｜在這片好藍的天空下
-La la, no more worries｜La la，煩惱都先別管了
-Just me and you｜只有我和你
-La la, keep on walking｜La la，繼續走下去
-Every dream comes true｜每個夢都會成真
-
-Sunny day, stay with me｜晴天，請留在我身邊
-La la la
-
-───────────
 音樂：Mellow Meow（AI 輔助創作）
 
-#lofi #下班音樂 #上班族 #療癒音樂 #chillmusic`
+#lofi #下班音樂 #原創歌曲`
         },
         {
-          label: "標籤",
+          label: "縮圖 GPT Prompt（先上傳 La_La_YT-Cover.jpg）",
           platform: "YT",
-          text: `La La, Mellow Meow, lofi, lo-fi music, chill lofi, 原創歌曲, 下班音樂, 上班族, 社畜, 療癒音樂, 放鬆音樂, 珍奶, sunny day music, walking music, lyric video, 華語lofi, cozy music`
+          text: `Edit the attached YouTube thumbnail. Keep EVERYTHING exactly as it is: the record sleeve, the vinyl, the blurred sky background, the film grain, the colors, the "LO-FI SINGLE" label, the large script "La La", the line "sunny day, stay with me", the audio wave bars and "LYRIC VIDEO". Same positions, sizes and fonts.
+
+Only add ONE line of Traditional Chinese text: 「下班了，這段時間是你的」
+- Position: right side, between "sunny day, stay with me" and the audio wave bars, aligned with the other text on the right.
+- Style: elegant Traditional Chinese serif (like Noto Serif TC), medium weight, cream white (#F4EEE3), matching the existing text color, with a very soft subtle shadow.
+- Size: a bit larger than "sunny day, stay with me" so it is readable on a phone, but clearly smaller than "La La".
+- If needed, move the audio wave bars and "LYRIC VIDEO" slightly down to keep balanced spacing.
+
+Do not add any other text, emoji, stickers or decorations. Do not change any existing text. Keep 16:9.`
+        },
+        {
+          label: "標籤（填在「標籤」欄位，不會顯示在說明欄）",
+          platform: "YT",
+          text: `La La, Mellow Meow, lofi, lo-fi music, chill lofi, 原創歌曲, 下班音樂, 上班族, 療癒音樂, 放鬆音樂, 珍奶, sunny day music, walking music, lyric video, 華語lofi, cozy music`
         },
         {
           label: "置頂留言",
@@ -310,58 +277,45 @@ La la la
 我會挑幾則寫進下一首歌，被選到的會標在說明欄。`
         },
         {
-          label: "縮圖中文鉤子",
-          platform: "YT",
-          text: `今天也是靠珍奶活下來的`
-        },
-        {
-          label: "直式短片字卡（Short / Reel 共用）",
-          platform: "9:16",
-          text: `0 秒：打卡下班後的第一口珍奶
-副歌進來：La la～ 明天的事明天再說`
-        },
-        {
           label: "Short 標題＋說明",
           platform: "YT",
-          text: `標題：打卡下班後的第一口珍奶 🧋 #lofi #下班 #上班族
+          text: `標題：下班後，給自己一首歌的時間 ☁️
 說明：完整版〈La La〉在頻道首頁。今天也辛苦了。`
         },
         {
           label: "Reel 文案（11/20 週五）",
           platform: "IG",
-          text: `週五晚上 8 點，終於可以不用回訊息了 🧋
+          text: `週五晚上 8 點，終於可以不用回訊息了 ☁️
 
 Mellow Meow 第一首歌〈La La〉
 完整版在 YouTube（主頁連結）
 
 用一句話形容你今天，我會挑幾則寫進下一首歌 👇
 
-#lofi #下班 #社畜日常 #小確幸 #珍奶 #chillmusic #原創歌曲 #mellowmeow`
+#lofi #下班 #社畜日常 #小確幸 #chillmusic #原創歌曲 #mellowmeow`
         },
         {
-          label: "歌詞卡輪播：5 張圖的文字",
+          label: "歌詞填空卡內容",
           platform: "IG",
-          text: `1｜La La 歌詞卡（上班族翻譯版）
-2｜Sunlight on my window
-　 陽光灑在我的窗邊（我在會議室，看得到算我贏）
-3｜Bubble tea and city trains
-　 珍奶和電車（這就是我這個月的旅遊預算）
-4｜La la, no more worries
-　 煩惱都先別管了（明天再管）
-5｜Sunny day, stay with me
-　 晴天，拜託撐到週末`
+          text: `上方小字：La La｜歌詞填空
+
+中間大字：La la, no more ________
+下面一行：La la，＿＿＿ 都先別管了
+
+底部小字：你最想 no more 的是什麼？留言填空 ☁️`
         },
         {
-          label: "歌詞卡輪播文案（11/23 週一）",
+          label: "歌詞填空卡文案（11/23 週一）",
           platform: "IG",
-          text: `週一，撐住。
+          text: `〈La La〉原本的歌詞是 La la, no more worries。
 
-把〈La La〉的歌詞翻成上班族版本了。
-第 3 張是我本人。
+但週一晚上，我們最想 no more 的應該是……
+留言幫我填空，中文英文都可以 👇
+我先：no more 臨時會議。
 
-存起來，週五下班再聽 🔖
+我會挑幾則寫進下一首歌 ☁️
 
-#lofi #週一 #社畜日常 #上班族 #小確幸 #珍奶 #mellowmeow`
+#週一 #下班 #社畜日常 #上班族 #lofi #原創歌曲 #mellowmeow`
         }
       ]
     }
@@ -371,7 +325,7 @@ Mellow Meow 第一首歌〈La La〉
     "選一句上班族的真實小事當主題（週一、加班、第幾杯咖啡、等主管先走…）",
     "做歌＋歌詞影片（16:9）",
     "剪 1 支 15–20 秒直式短片，0 秒就放字卡",
-    "做 1 則 IG 輪播或封面貼文",
+    "做 1 則 IG 歌詞互動圖卡：從這首歌挑一句做填空，或挑幾句做「用一句歌詞形容你今天」的選擇題",
     "週五 20:00：YT 歌詞影片＋IG Reel",
     "下週一 21:00：YT Short＋IG 輪播",
     "從留言挑 3–5 則「一句話」，寫進下一首歌，並在說明欄標註",
@@ -394,7 +348,7 @@ Mellow Meow 第一首歌〈La La〉
         "長篇大論"
       ],
       examples: [
-        "今天也是靠一杯珍奶活下來的。",
+        "下班後，給自己一首歌的時間。",
         "週五晚上 8 點，終於可以不用回訊息了。",
         "La la～ 明天的事明天再說。",
         "週一，撐住。"

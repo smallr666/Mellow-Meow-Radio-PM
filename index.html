@@ -789,13 +789,13 @@ function cblock(label, text, platform, key){
 function deckHTML(r){
   const items = r.schedule.flatMap((s,si)=>s.items.map(it=>({...it, when:s.date, wave:si})));
   const n = items.length, mid = (n-1)/2;
-  const frameOf = it => /Short|Reel/.test(it.what) ? "f916" : /輪播/.test(it.what) ? "f45" : "f169";
+  const frameOf = it => /Short|Reel/.test(it.what) ? "f916" : /輪播|圖卡/.test(it.what) ? "f45" : "f169";
   return `<div class="deck" id="deck-${r.id}" aria-label="這首歌的 ${n} 則發文">${items.map((it,i)=>{ const t=allTasks().find(x=>x.id===it.task); const done=t?st(t).done:false;
     const sx=(i-mid)*4, sr=(i-mid)*-4, fx=`calc(${(i-mid).toFixed(2)} * var(--gap))`, fy=Math.abs(i-mid)*6, fr=(i-mid)*3;
     return `<div class="dcard ${done?"done":""}" style="--sx:${sx}px;--sr:${sr}deg;--fx:${fx};--fy:${fy}px;--fr:${fr}deg;--z:${n-i};--k:${i}" title="${esc(it.what)}">
       <span class="chipx ${esc(it.platform)}">${esc(it.platform)}</span>
       <div class="thumb"><div class="frame ${frameOf(it)}"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#catFace"/></svg></div></div>
-      <span class="cap">${frameOf(it)==="f169"?"歌詞影片":frameOf(it)==="f45"?"輪播":it.platform==="YT"?"Short":"Reel"}</span><span class="when">${esc(it.when.replace(/（.*/,""))}</span></div>`; }).join("")}</div>
+      <span class="cap">${frameOf(it)==="f169"?"歌詞影片":frameOf(it)==="f45"?"互動圖卡":it.platform==="YT"?"Short":"Reel"}</span><span class="when">${esc(it.when.replace(/（.*/,""))}</span></div>`; }).join("")}</div>
   <p class="deckhint">一首歌就這 ${n} 則，做完的會打勾</p>`;
 }
 function viewRelease(){

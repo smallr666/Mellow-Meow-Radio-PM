@@ -129,8 +129,8 @@ a{color:var(--sky-deep)}
 .theme .s{right:10px}.theme .m{left:11px}
 
 /* 頁面切換 */
-.view{animation:viewIn .45s cubic-bezier(.2,.8,.2,1)}
-@keyframes viewIn{from{opacity:0;transform:translateY(14px)}}
+.view{animation:viewIn .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes viewIn{from{opacity:.3;transform:translateY(8px)}}
 .page-title{margin:18px 2px 4px;font-size:26px;font-weight:800;line-height:1.3}
 .page-sub{margin:0 2px 18px;color:var(--ink-2)}
 
@@ -481,14 +481,7 @@ hr.soft{border:0;border-top:1px dashed var(--line);margin:18px 0}
 @keyframes ringpop{from{transform:scale(.4);opacity:0}}
 
 /* 共享元素轉場（支援的瀏覽器才有） */
-#view{view-transition-name:mainview}
 ::view-transition-old(root),::view-transition-new(root){animation:none}
-::view-transition-old(mainview),::view-transition-new(mainview){animation-duration:.38s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
-::view-transition-new(mainview){animation-name:vtIn}
-::view-transition-old(mainview){animation-name:vtOut}
-::view-transition-group(mainview){animation:none}
-@keyframes vtIn{from{opacity:0;transform:translateY(10px)}}
-@keyframes vtOut{to{opacity:0}}
 ::view-transition-group(tasktitle){animation-duration:.45s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -912,18 +905,15 @@ const canVT = !!document.startViewTransition && !reduce;
 function paint(anim){
   renderTop(page);
   const v=$("#view"); v.innerHTML = PAGES[page]();
-  if (anim && !canVT){ v.classList.remove("view"); void v.offsetWidth; v.classList.add("view"); }
+  if (anim){ v.classList.remove("view"); void v.offsetWidth; v.classList.add("view"); }
   $$("[data-tab]").forEach(a => a.setAttribute("aria-current", a.dataset.tab===page ? "page" : "false"));
   movePills(); bindTilt(); bindCats(); drawDraft(); bindDeck();
   if (anim){
     reveal($("#greet")); reveal($(".hero .big")); reveal($(".songtitle"));
-    const b=$(".book"); if(b){ b.classList.add("opening"); setTimeout(()=>b.classList.remove("opening"),1600); }
+    const b=$(".book"); if(b) b.classList.add("opening");
   }
 }
-function render(anim){
-  if (anim && canVT) document.startViewTransition(()=>paint(true));
-  else paint(anim);
-}
+function render(anim){ paint(anim); }
 function bindDeck(){
   $$(".deck").forEach(d=>{
     if(!("IntersectionObserver" in window) || reduce){ d.classList.add("fan"); return; }
@@ -937,7 +927,7 @@ function movePills(){
   const a = $(`#snav a[data-tab="${page}"]`), sp=$("#spill");
   if (a && sp){ sp.style.transform = `translateY(${a.offsetTop}px)`; sp.style.height = a.offsetHeight+"px"; }
 }
-addEventListener("hashchange", () => { closeDrawers(); route(); scrollTo({top:0, behavior: reduce ? "auto" : "smooth"}); });
+addEventListener("hashchange", () => { closeDrawers(); scrollTo(0,0); route(); });
 let rz; addEventListener("resize", () => { clearTimeout(rz); rz=setTimeout(()=>{ if(page==="tasks") render(false); else movePills(); },200); });
 
 /* ---------- 立體互動：視差＋卡片傾斜 ---------- */

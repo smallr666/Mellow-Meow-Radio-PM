@@ -1,0 +1,752 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#6A94C4">
+<title>Mellow Meow｜下班後的工作手帳</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐈‍⬛</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=LXGW+WenKai+TC:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sky:#6A94C4; --sky-soft:#8FB0D6; --dusk:#34507A;
+  --paper:#F4EEE3; --paper-2:#EBE3D4; --line:#DCD2BF;
+  --ink:#2C2A33; --ink-soft:#6B6573; --cat:#1E1E24; --lamp:#F2C84B;
+  --tape:rgba(242,200,75,.55); --shadow:0 1px 0 rgba(52,80,122,.08), 0 8px 24px -12px rgba(30,30,36,.35);
+  --font:"LXGW WenKai TC","Noto Serif TC","PingFang TC","Microsoft JhengHei",serif;
+  --script:"Great Vibes","Snell Roundhand",cursive;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --sky:#2A3F5F; --sky-soft:#3A5479; --dusk:#AFC4E2;
+    --paper:#26262E; --paper-2:#2F2F38; --line:#3D3C47;
+    --ink:#EDE7DA; --ink-soft:#A8A2AE; --cat:#0F0F14; --lamp:#F2C84B;
+    --tape:rgba(242,200,75,.35); --shadow:0 8px 24px -12px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --sky:#2A3F5F; --sky-soft:#3A5479; --dusk:#AFC4E2;
+  --paper:#26262E; --paper-2:#2F2F38; --line:#3D3C47;
+  --ink:#EDE7DA; --ink-soft:#A8A2AE; --cat:#0F0F14; --lamp:#F2C84B;
+  --tape:rgba(242,200,75,.35); --shadow:0 8px 24px -12px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0}
+body{
+  font-family:var(--font); color:var(--ink); background:var(--sky);
+  font-size:16px; line-height:1.7; -webkit-font-smoothing:antialiased;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  min-height:100vh;
+}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--lamp);outline-offset:2px;border-radius:6px}
+.wrap{max-width:720px;margin:0 auto;padding:0 16px 120px}
+
+/* ---------- 窗邊 header ---------- */
+.window{position:relative;height:210px;margin:0 -16px 0;overflow:hidden}
+.window .clouds span{position:absolute;background:rgba(255,255,255,.75);border-radius:999px;filter:blur(1px)}
+.window .clouds span::before,.window .clouds span::after{content:"";position:absolute;background:inherit;border-radius:50%}
+.c1{width:110px;height:30px;top:112px;left:36%}
+.c1::before{width:50px;height:46px;left:18px;top:-24px}
+.c1::after{width:40px;height:34px;left:56px;top:-14px}
+.c2{width:80px;height:22px;top:126px;left:4%;opacity:.7}
+.c2::before{width:36px;height:34px;left:14px;top:-18px}
+.c2::after{width:30px;height:24px;left:40px;top:-10px}
+@media (prefers-reduced-motion:no-preference){
+  .c1{animation:drift 60s linear infinite alternate}
+  .c2{animation:drift 80s linear infinite alternate-reverse}
+}
+@keyframes drift{to{transform:translateX(40px)}}
+.city{position:absolute;bottom:34px;left:0;right:0;height:46px;opacity:.55}
+.sill{position:absolute;bottom:0;left:0;right:0;height:36px;background:var(--paper);box-shadow:0 -2px 0 rgba(255,255,255,.4) inset}
+.brand{position:absolute;left:20px;top:22px;color:#fff}
+.brand h1{font-family:var(--script);font-weight:400;font-size:46px;line-height:1;margin:0;letter-spacing:.5px;text-shadow:0 2px 12px rgba(30,30,36,.15)}
+.brand p{margin:6px 0 0 4px;font-size:15px;opacity:.95}
+.cat{position:absolute;right:28px;bottom:26px;width:86px;height:108px}
+.gear{position:absolute;right:12px;top:12px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.22);color:#fff;display:grid;place-items:center}
+.gear svg{width:22px;height:22px}
+
+/* ---------- 下班倒數 ---------- */
+.clockout{background:var(--paper);margin:0 -16px;padding:4px 20px 18px;border-bottom:1px solid var(--line)}
+.clockout .big{font-size:22px;font-weight:700;margin:0}
+.clockout .big b{color:var(--dusk);font-size:30px;padding:0 2px}
+.meter{height:10px;border-radius:99px;background:var(--paper-2);margin-top:10px;overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:linear-gradient(90deg,var(--sky-soft),var(--lamp));border-radius:99px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.clockout small{color:var(--ink-soft)}
+
+/* ---------- 紙張 ---------- */
+.sheet{position:relative;background:var(--paper);border-radius:4px 4px 10px 10px;box-shadow:var(--shadow);padding:26px 18px 16px;margin:28px 0 0}
+.tape{position:absolute;top:-12px;left:18px;background:var(--tape);padding:3px 14px;font-weight:700;font-size:15px;transform:rotate(-2deg);color:var(--ink)}
+.tape.r{left:auto;right:18px;transform:rotate(2deg)}
+.sheet h2{font-size:20px;margin:0 0 4px}
+.sheet .sub{color:var(--ink-soft);font-size:14px;margin:0 0 10px}
+.muted{color:var(--ink-soft)}
+
+/* home cards */
+.next{display:flex;gap:14px;align-items:flex-start}
+.next .stamp{flex:none;width:52px;height:52px;border-radius:50%;border:2px dashed var(--dusk);display:grid;place-items:center;color:var(--dusk);font-weight:700;transform:rotate(-8deg)}
+.next h3{margin:0;font-size:18px;line-height:1.5}
+.btn{display:inline-flex;align-items:center;gap:6px;border:0;border-radius:999px;padding:8px 16px;background:var(--cat);color:#fff;font-weight:700}
+:root[data-theme="dark"] .btn{background:var(--lamp);color:#1E1E24}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{background:var(--lamp);color:#1E1E24}}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.small{padding:5px 12px;font-size:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.countdown{display:flex;align-items:baseline;gap:10px}
+.countdown .n{font-size:54px;line-height:1;font-weight:700;color:var(--dusk)}
+.rules{margin:0;padding-left:1.2em}
+.rules li{margin:4px 0}
+.phasebar{display:grid;grid-template-columns:6.5em 1fr 3em;gap:10px;align-items:center;font-size:14px;margin:6px 0}
+.phasebar .meter{margin:0;height:8px}
+
+/* ---------- tasks ---------- */
+.filters{display:flex;gap:8px;margin:22px 0 0;overflow-x:auto;padding-bottom:4px}
+.chip{border:1.5px solid rgba(255,255,255,.6);background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:4px 14px;white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--paper);color:var(--ink);border-color:var(--paper)}
+.task{border-top:1px dashed var(--line)}
+.task:first-of-type{border-top:0}
+.trow{display:flex;align-items:flex-start;gap:12px;padding:10px 0}
+.check{flex:none;width:28px;height:28px;margin-top:1px;border-radius:50%;border:2px solid var(--ink-soft);background:transparent;display:grid;place-items:center;padding:0;transition:transform .15s}
+.check svg{width:18px;height:18px;stroke:var(--cat);stroke-width:3;fill:none;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .3s ease}
+.task.done .check{background:var(--lamp);border-color:var(--lamp)}
+.task.done .check svg{stroke-dashoffset:0}
+.check:active{transform:scale(.88)}
+.ttext{flex:1;min-width:0;background:none;border:0;padding:0;text-align:left;display:block}
+.ttitle{font-size:16.5px;line-height:1.55}
+.task.done .ttitle{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--lamp);text-decoration-thickness:2px}
+.tmeta{display:flex;gap:6px;margin-top:2px;flex-wrap:wrap}
+.tag{font-size:12.5px;border-radius:4px;padding:0 7px;background:var(--paper-2);color:var(--ink-soft);border:1px solid var(--line)}
+.tag.note{background:rgba(242,200,75,.25);border-color:transparent;color:var(--ink)}
+.chev{flex:none;width:22px;height:22px;margin-top:4px;color:var(--ink-soft);transition:transform .25s}
+.task.open .chev{transform:rotate(180deg)}
+.tbody{display:none;padding:0 0 14px 40px}
+.task.open .tbody{display:block}
+.tbody p{margin:0 0 8px}
+.tbody ol{margin:0 0 10px;padding-left:1.3em}
+.tbody li{margin:2px 0}
+textarea.note{width:100%;min-height:72px;border:1.5px solid var(--line);border-radius:8px;background:
+  repeating-linear-gradient(var(--paper),var(--paper) 27px,var(--line) 28px);line-height:28px;padding:2px 10px;resize:vertical}
+.saved{font-size:12.5px;color:var(--ink-soft);height:18px}
+.add{display:flex;gap:8px;margin-top:8px}
+.add input{flex:1;min-width:0;border:1.5px dashed var(--line);background:transparent;border-radius:8px;padding:6px 10px}
+
+/* ---------- release ---------- */
+.rel-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-end}
+.rel-head h2{font-family:var(--script);font-weight:400;font-size:52px;line-height:1;margin:0}
+.rel-head .sub{font-style:italic}
+.timeline{list-style:none;margin:14px 0 0;padding:0}
+.timeline>li{position:relative;padding:0 0 16px 30px}
+.timeline>li::before{content:"";position:absolute;left:9px;top:8px;bottom:-4px;border-left:2px dotted var(--line)}
+.timeline>li:last-child::before{display:none}
+.timeline .dot{position:absolute;left:0;top:4px;width:20px;height:20px;border-radius:50%;background:var(--sky);border:3px solid var(--paper);box-shadow:0 0 0 2px var(--sky)}
+.timeline h4{margin:0;font-size:16px}
+.mini{display:flex;align-items:center;gap:10px;margin-top:6px}
+.mini .check{width:24px;height:24px}
+.plat{font-size:12px;font-weight:700;border-radius:4px;padding:0 6px;color:#fff;background:var(--dusk);flex:none}
+.plat.IG{background:#C1698F}.plat.YT{background:#C7564F}.plat.p916,.plat.Threads{background:var(--ink-soft)}
+.copyblock{border-top:1px dashed var(--line);padding:12px 0}
+.tape + .copyblock{border-top:0}
+.cb-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cb-head strong{font-size:15.5px}
+pre.copytext{white-space:pre-wrap;word-break:break-word;font-family:var(--font);font-size:14.5px;line-height:1.75;background:var(--paper-2);border-radius:8px;padding:10px 12px;margin:8px 0 0;max-height:none;overflow:hidden;position:relative}
+pre.copytext.clamp{max-height:9.5em}
+pre.copytext.clamp::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3em;background:linear-gradient(transparent,var(--paper-2))}
+.more{background:none;border:0;color:var(--dusk);padding:4px 0;font-size:14px;text-decoration:underline}
+.formula{margin:0;padding-left:1.4em}
+.formula li{margin:3px 0}
+
+/* ---------- brand ---------- */
+.dd{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.dd ul{margin:6px 0 0;padding-left:1.1em;font-size:15px}
+.dd h4{margin:0}
+.quote{border-left:4px solid var(--lamp);padding:2px 12px;margin:10px 0;background:var(--paper-2);border-radius:0 6px 6px 0}
+.qlist{display:flex;flex-wrap:wrap;gap:8px}
+.qlist button{border:1.5px solid var(--line);background:var(--paper-2);border-radius:999px;padding:4px 12px;font-size:14.5px;text-align:left}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(104px,1fr));gap:10px}
+.swatch{border:0;padding:0;background:none;text-align:left}
+.swatch i{display:block;height:58px;border-radius:8px;border:1px solid var(--line)}
+.swatch span{display:block;font-size:13.5px;margin-top:4px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+td{padding:7px 4px;border-top:1px dashed var(--line);vertical-align:top}
+td:first-child{white-space:nowrap;padding-right:12px;font-weight:700}
+@media (max-width:520px){.dd{grid-template-columns:1fr}}
+
+/* ---------- notes ---------- */
+.composer textarea{width:100%;min-height:90px;border:1.5px solid var(--line);border-radius:8px;background:var(--paper-2);padding:10px}
+.stickies{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:18px}
+.sticky{background:#FBF1C7;color:#2C2A33;padding:14px 14px 10px;border-radius:2px;box-shadow:var(--shadow);position:relative}
+.sticky:nth-child(3n+2){background:#DCE8F5}
+.sticky:nth-child(3n){background:#F3E1D6}
+.sticky p{margin:0;white-space:pre-wrap;word-break:break-word}
+.sticky textarea{width:100%;min-height:90px;border:0;background:rgba(255,255,255,.5);border-radius:4px;padding:6px;color:#2C2A33}
+.sticky footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:12.5px;color:#6B6573}
+.sticky footer button{background:none;border:0;color:#6B6573;padding:2px 4px;text-decoration:underline}
+.empty{text-align:center;color:#fff;margin:30px 0;opacity:.95}
+
+/* ---------- bottom nav ---------- */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--paper);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+nav.tabs .in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr)}
+nav.tabs a{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 0 7px;color:var(--ink-soft);text-decoration:none;font-size:12.5px;position:relative}
+nav.tabs a svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav.tabs a[aria-current="page"]{color:var(--ink);font-weight:700}
+nav.tabs a[aria-current="page"]::before{content:"";position:absolute;top:0;width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--lamp)}
+
+/* ---------- cat FAB + chat ---------- */
+body.on-home .fab .bubble{display:block}
+.fab{position:fixed;right:16px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:21;width:60px;height:60px;border-radius:50%;border:3px solid var(--paper);background:var(--cat);box-shadow:var(--shadow);padding:0;display:grid;place-items:center}
+.fab svg{width:40px;height:40px}
+.fab .bubble{display:none;position:absolute;right:62px;top:8px;background:var(--paper);color:var(--ink);font-size:13px;padding:3px 10px;border-radius:12px 12px 2px 12px;white-space:nowrap;box-shadow:var(--shadow)}
+.sheetbg{position:fixed;inset:0;background:rgba(20,24,34,.45);z-index:30;display:none}
+.sheetbg.show{display:block}
+.drawer{position:fixed;left:0;right:0;bottom:0;z-index:31;max-width:720px;margin:0 auto;background:var(--paper);border-radius:18px 18px 0 0;height:min(86vh,760px);display:flex;flex-direction:column;transform:translateY(105%);visibility:hidden;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s linear .32s;padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.show{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.2,.8,.2,1),visibility 0s}
+.drawer header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px 10px;border-bottom:1px solid var(--line)}
+.drawer header h3{margin:0;font-size:18px}
+.x{border:0;background:var(--paper-2);width:34px;height:34px;border-radius:50%;font-size:18px;line-height:1}
+.dbody{flex:1;overflow:auto;padding:14px 18px}
+.msg{width:fit-content;max-width:88%;margin:0 0 12px;padding:9px 13px;border-radius:14px;white-space:pre-wrap;word-break:break-word;font-size:15px}
+.msg.user{margin-left:auto;background:var(--sky);color:#fff;border-bottom-right-radius:4px}
+.msg.ai{background:var(--paper-2);border-bottom-left-radius:4px}
+.msg.err{background:#F6D9D3;color:#7A2E22}
+.actions{margin-top:8px;padding:8px 10px;border:1.5px dashed var(--dusk);border-radius:10px;background:var(--paper);white-space:normal}
+.actions ul{margin:4px 0 8px;padding-left:1.2em}
+.dfoot{border-top:1px solid var(--line);padding:10px 12px}
+.quick{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
+.quick button{flex:none;border:1.5px solid var(--line);background:var(--paper-2);border-radius:999px;padding:3px 12px;font-size:13.5px}
+.composerrow{display:flex;gap:8px}
+.composerrow textarea{flex:1;min-height:44px;max-height:140px;border:1.5px solid var(--line);border-radius:12px;background:var(--paper-2);padding:9px 12px;resize:none}
+.field{display:block;margin:10px 0}
+.field span{display:block;font-size:14px;color:var(--ink-soft)}
+.field input,.field select{width:100%;border:1.5px solid var(--line);border-radius:8px;background:var(--paper-2);padding:8px 10px}
+.warn{font-size:13.5px;background:rgba(242,200,75,.22);border-radius:8px;padding:8px 10px;margin:8px 0}
+hr.soft{border:0;border-top:1px dashed var(--line);margin:16px 0}
+
+.toast{position:fixed;left:50%;bottom:calc(150px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--cat);color:#fff;padding:8px 18px;border-radius:999px;z-index:50;transition:all .25s;pointer-events:none;font-size:14.5px}
+.toast.show{opacity:1;transform:translateX(-50%)}
+.page{display:none}
+.page.active{display:block}
+.pagehead{color:#fff;margin:22px 4px 0}
+.pagehead h2{margin:0;font-size:24px}
+.pagehead p{margin:2px 0 0;opacity:.92}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- 窗邊 -->
+  <header class="window" aria-label="Mellow Meow">
+    <div class="clouds"><span class="c1"></span><span class="c2"></span></div>
+    <svg class="city" viewBox="0 0 400 46" preserveAspectRatio="none" aria-hidden="true">
+      <g fill="#fff"><rect x="10" y="18" width="34" height="28"/><rect x="50" y="6" width="26" height="40"/><rect x="82" y="22" width="40" height="24"/><rect x="190" y="12" width="30" height="34"/><rect x="226" y="24" width="44" height="22"/><rect x="300" y="8" width="28" height="38"/><rect x="334" y="20" width="36" height="26"/><rect x="376" y="28" width="24" height="18"/></g>
+      <g fill="#F2C84B"><rect x="56" y="14" width="5" height="5"/><rect x="66" y="26" width="5" height="5"/><rect x="198" y="20" width="5" height="5"/><rect x="308" y="16" width="5" height="5"/><rect x="316" y="28" width="5" height="5"/></g>
+    </svg>
+    <div class="sill"></div>
+    <div class="brand">
+      <h1>Mellow Meow</h1>
+      <p>下班後的工作手帳</p>
+    </div>
+    <svg class="cat" viewBox="0 0 86 108" aria-hidden="true">
+      <path d="M62 96c10 0 18-4 20-12" stroke="var(--cat)" stroke-width="7" fill="none" stroke-linecap="round"/>
+      <ellipse cx="42" cy="78" rx="28" ry="26" fill="var(--cat)"/>
+      <circle cx="42" cy="40" r="21" fill="var(--cat)"/>
+      <path d="M24 32 L22 10 L38 24 Z" fill="var(--cat)"/><path d="M60 32 L62 10 L46 24 Z" fill="var(--cat)"/>
+      <path d="M20 40 A22 22 0 0 1 64 40" stroke="#F4EEE3" stroke-width="4" fill="none"/>
+      <rect x="14" y="36" width="10" height="16" rx="5" fill="#F4EEE3"/><rect x="60" y="36" width="10" height="16" rx="5" fill="#F4EEE3"/>
+    </svg>
+    <button class="gear" id="openSettings" aria-label="設定與備份">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </header>
+
+  <section class="clockout" aria-live="polite">
+    <p class="big" id="clockText"></p>
+    <div class="meter" aria-hidden="true"><i id="clockBar" style="width:0"></i></div>
+    <small id="clockSub"></small>
+  </section>
+
+  <!-- 總覽 -->
+  <main>
+  <section class="page" id="page-home">
+    <div class="sheet">
+      <span class="tape">先做這件</span>
+      <div class="next" id="nextUp"></div>
+    </div>
+    <div class="sheet" id="releaseCountdown"></div>
+    <div class="sheet">
+      <span class="tape r">各階段</span>
+      <div id="phaseBars"></div>
+    </div>
+    <div class="sheet">
+      <span class="tape">經營守則</span>
+      <ul class="rules" id="rulesList"></ul>
+    </div>
+    <div class="sheet" id="homeNotes"></div>
+  </section>
+
+  <!-- 待辦 -->
+  <section class="page" id="page-tasks">
+    <div class="pagehead"><h2>待辦清單</h2><p>點標題看步驟，可以寫筆記。</p></div>
+    <div class="filters" role="group" aria-label="篩選">
+      <button class="chip" data-filter="todo" aria-pressed="true">還沒做</button>
+      <button class="chip" data-filter="all" aria-pressed="false">全部</button>
+      <button class="chip" data-filter="done" aria-pressed="false">做完了</button>
+    </div>
+    <div id="taskList"></div>
+  </section>
+
+  <!-- 發布 -->
+  <section class="page" id="page-release">
+    <div class="pagehead"><h2>發布計畫</h2><p>一首歌，每個平台最多兩則。文案點「複製」就能貼。</p></div>
+    <div id="releaseList"></div>
+    <div class="sheet">
+      <span class="tape">每首歌的發布公式</span>
+      <ol class="formula" id="formulaList"></ol>
+    </div>
+  </section>
+
+  <!-- 品牌 -->
+  <section class="page" id="page-brand">
+    <div class="pagehead"><h2>品牌手冊</h2><p>語氣、顏色、規格、Prompt，和目前的頻道設定。</p></div>
+    <div id="brandWrap"></div>
+  </section>
+
+  <!-- 筆記 -->
+  <section class="page" id="page-notes">
+    <div class="pagehead"><h2>筆記</h2><p>想到什麼就丟進來，數據、點子、要問 Claude 的事都可以。</p></div>
+    <div class="sheet composer">
+      <span class="tape">新便利貼</span>
+      <textarea id="noteInput" placeholder="例如：La La 第一週平均觀看 1:42、Short 有 900 次觀看"></textarea>
+      <div class="row" style="justify-content:flex-end;margin-top:8px"><button class="btn" id="addNote">貼上去</button></div>
+    </div>
+    <div class="stickies" id="stickies"></div>
+  </section>
+  </main>
+</div>
+
+<!-- 底部導覽 -->
+<nav class="tabs" aria-label="分頁">
+  <div class="in">
+    <a href="#home" data-tab="home"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M12 4v16M4 12h16"/></svg>總覽</a>
+    <a href="#tasks" data-tab="tasks"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M3.5 6l1.5 1.5L7 5M3.5 12l1.5 1.5L7 11M3.5 18l1.5 1.5L7 17"/></svg>待辦</a>
+    <a href="#release" data-tab="release"><svg viewBox="0 0 24 24"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>發布</a>
+    <a href="#brand" data-tab="brand"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.1 0 1.6-.8 1.6-1.6 0-.5-.2-.9-.5-1.2-.3-.3-.5-.7-.5-1.2 0-.9.7-1.6 1.6-1.6H16a5 5 0 0 0 5-5c0-4.1-4-7.4-9-7.4z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10.5" cy="7.5" r="1"/><circle cx="15" cy="7.5" r="1"/></svg>品牌</a>
+    <a href="#notes" data-tab="notes"><svg viewBox="0 0 24 24"><path d="M5 4h14v11l-5 5H5z"/><path d="M14 20v-5h5"/></svg>筆記</a>
+  </div>
+</nav>
+
+<!-- 黑貓按鈕：問 Claude -->
+<button class="fab" id="openChat" aria-label="問 Claude">
+  <span class="bubble">問 Claude</span>
+  <svg viewBox="0 0 40 40" aria-hidden="true"><path d="M10 16 L9 5 L17 11 Z M30 16 L31 5 L23 11 Z" fill="#F4EEE3"/><circle cx="20" cy="22" r="12" fill="#F4EEE3"/><path d="M14.5 21q2 2 4 0M21.5 21q2 2 4 0" stroke="#1E1E24" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M19 25.5l1 .8 1-.8" stroke="#1E1E24" stroke-width="1.3" fill="none"/></svg>
+</button>
+
+<div class="sheetbg" id="sheetbg"></div>
+
+<!-- 對話抽屜 -->
+<section class="drawer" id="chatDrawer" role="dialog" aria-label="問 Claude" aria-modal="true">
+  <header><h3>問 Claude</h3><button class="x" data-close aria-label="關閉">×</button></header>
+  <div class="dbody" id="chatBody"></div>
+  <div class="dfoot" id="chatFoot">
+    <div class="quick" id="quickAsks"></div>
+    <div class="composerrow">
+      <textarea id="chatInput" rows="1" placeholder="想問什麼？"></textarea>
+      <button class="btn" id="sendChat">送出</button>
+    </div>
+  </div>
+</section>
+
+<!-- 設定抽屜 -->
+<section class="drawer" id="setDrawer" role="dialog" aria-label="設定與備份" aria-modal="true">
+  <header><h3>設定與備份</h3><button class="x" data-close aria-label="關閉">×</button></header>
+  <div class="dbody">
+    <h4 style="margin:0">備份進度</h4>
+    <p class="muted" style="margin:4px 0 8px">勾選和筆記只存在這台裝置的瀏覽器。換手機或電腦前，先匯出再匯入。要請 Claude 更新計畫時，也可以把匯出檔傳給它。</p>
+    <div class="row">
+      <button class="btn small" id="exportBtn">下載備份檔</button>
+      <button class="btn small ghost" id="copySummary">複製進度摘要</button>
+      <label class="btn small ghost" style="cursor:pointer">匯入備份檔<input type="file" id="importFile" accept="application/json" hidden></label>
+    </div>
+    <hr class="soft">
+    <h4 style="margin:0">直接在這裡問 Claude（選用）</h4>
+    <p class="muted" style="margin:4px 0">需要你自己的 Anthropic API 金鑰，費用另計，和 Claude 訂閱方案分開。</p>
+    <div class="warn">金鑰只會存在這台裝置的瀏覽器，不會上傳到 GitHub。請不要把金鑰寫進任何檔案，也建議在 Anthropic Console 設定每月花費上限。</div>
+    <label class="field"><span>API 金鑰</span><input id="apiKey" type="password" placeholder="sk-ant-..." autocomplete="off"></label>
+    <label class="field"><span>模型</span><input id="apiModel" placeholder="claude-sonnet-5-5"></label>
+    <div class="row"><button class="btn small" id="saveKey">儲存</button><button class="btn small ghost" id="clearChat">清空對話紀錄</button></div>
+    <hr class="soft">
+    <h4 style="margin:0">外觀</h4>
+    <label class="field"><span>主題</span>
+      <select id="themeSel"><option value="">跟隨系統</option><option value="light">晴天</option><option value="dark">傍晚</option></select>
+    </label>
+    <hr class="soft">
+    <p class="muted" id="verText" style="font-size:13px"></p>
+    <button class="btn small ghost" id="resetAll">清除這台裝置的所有進度</button>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="data.js"></script>
+<script>
+(() => {
+"use strict";
+const D = window.MM_DATA;
+if (!D) { document.body.innerHTML = '<p style="padding:24px;color:#fff">找不到 data.js，請確認它和 index.html 放在同一個資料夾。</p>'; return; }
+
+/* ---------- 狀態（存在瀏覽器） ---------- */
+const KEY = "mellowmeow-ops-v1";
+const blank = () => ({ tasks:{}, custom:[], notes:[], chat:[], settings:{ apiKey:"", model:"claude-sonnet-5-5", theme:"" } });
+let S;
+try { S = Object.assign(blank(), JSON.parse(localStorage.getItem(KEY) || "{}")); } catch(e) { S = blank(); }
+S.settings = Object.assign(blank().settings, S.settings || {});
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) { toast("儲存失敗：瀏覽器空間不足或被封鎖"); } };
+
+const $ = (s, el=document) => el.querySelector(s);
+const $$ = (s, el=document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const uid = () => "u" + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+let tt;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove("show"),1800); }
+async function copy(text, label="已複製"){
+  try { await navigator.clipboard.writeText(text); toast(label); }
+  catch(e){ const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); toast(label); }
+}
+
+/* ---------- 任務資料 ---------- */
+function phases(){
+  return D.phases.map(p => ({ ...p, tasks: [...p.tasks, ...S.custom.filter(c => c.phase === p.id).map(c => ({...c, custom:true}))] }));
+}
+function allTasks(){ return phases().flatMap(p => p.tasks.map(t => ({...t, phase:p.id, phaseTitle:p.title}))); }
+function st(t){ const s = S.tasks[t.id]; return { done: s && "done" in s ? s.done : !!t.done, note: (s && s.note) || "" }; }
+function setDone(id, done){ S.tasks[id] = Object.assign(S.tasks[id] || {}, { done }); save(); }
+function setNote(id, note){ S.tasks[id] = Object.assign(S.tasks[id] || {}, { note }); save(); }
+
+/* ---------- 下班倒數 ---------- */
+function renderClock(){
+  const ongoing = new Set(D.phases.filter(p=>p.ongoing).map(p=>p.id)); const ts = allTasks().filter(t=>!ongoing.has(t.phase)); const left = ts.filter(t => !st(t).done).length; const pct = Math.round((ts.length-left)/ts.length*100);
+  $("#clockText").innerHTML = left ? `還差 <b>${left}</b> 件事就能下班` : "全部做完，今天準時下班 🧋";
+  $("#clockBar").style.width = pct + "%";
+  $("#clockSub").textContent = `這一輪進度 ${pct}%（不含長期節奏）`;
+}
+
+/* ---------- 總覽 ---------- */
+function renderHome(){
+  const next = allTasks().find(t => !st(t).done && !(D.phases.find(p=>p.id===t.phase)||{}).ongoing) || allTasks().find(t => !st(t).done);
+  $("#nextUp").innerHTML = next ? `
+    <div class="stamp">${esc(next.phase)}</div>
+    <div style="flex:1">
+      <h3>${esc(next.title)}</h3>
+      <p class="muted" style="margin:2px 0 10px">${esc(next.phaseTitle)}${next.tag ? "　·　"+esc(next.tag) : ""}</p>
+      <div class="row"><button class="btn small" data-go="${next.id}">看步驟</button><button class="btn small ghost" data-quickdone="${next.id}">已經做完</button></div>
+    </div>` : `<div><h3>清單清空了</h3><p class="muted">去「筆記」記一下這週的數據，或問 Claude 下一步。</p></div>`;
+
+  const r = D.releases[0];
+  if (r){
+    const ms = new Date(r.date) - Date.now(); const days = Math.ceil(ms/86400000);
+    $("#releaseCountdown").innerHTML = `<span class="tape r">下一首</span>
+      <div class="countdown">${days > 0 ? `<span class="n">${days}</span><span>天後首播〈${esc(r.title)}〉</span>` : `<span style="font-size:20px;font-weight:700">〈${esc(r.title)}〉已上線</span>`}</div>
+      <p class="muted" style="margin:6px 0 10px">${r.schedule.map(s=>esc(s.date)).join("、")}</p>
+      <a class="btn small ghost" href="#release" style="text-decoration:none">看發布計畫</a>`;
+  }
+
+  $("#phaseBars").innerHTML = phases().filter(p => p.id !== "done").map(p => {
+    const n = p.tasks.length, d = p.tasks.filter(t => st(t).done).length, pc = n ? Math.round(d/n*100) : 0;
+    return `<div class="phasebar"><span>${esc(p.title)}</span><div class="meter"><i style="width:${pc}%"></i></div><span class="muted">${d}/${n}</span></div>`;
+  }).join("");
+
+  $("#rulesList").innerHTML = D.rules.map(r => `<li>${esc(r)}</li>`).join("");
+
+  const recent = S.notes.slice(0,2);
+  $("#homeNotes").innerHTML = `<span class="tape">最近的筆記</span>` + (recent.length
+    ? recent.map(n => `<p style="margin:6px 0;white-space:pre-wrap">${esc(n.text)}</p><p class="muted" style="font-size:12.5px;margin:0 0 6px">${new Date(n.t).toLocaleString("zh-TW")}</p>`).join("")
+    : `<p class="muted" style="margin:4px 0 8px">還沒有筆記。上線一週後，記得把數據寫進來。</p>`) + `<a class="btn small ghost" href="#notes" style="text-decoration:none">打開筆記</a>`;
+}
+
+/* ---------- 待辦 ---------- */
+let filter = "todo"; const openSet = new Set();
+function taskHTML(t){
+  const s = st(t);
+  return `<div class="task ${s.done?"done":""} ${openSet.has(t.id)?"open":""}" data-id="${t.id}" id="t-${t.id}">
+    <div class="trow">
+      <button class="check" data-toggle="${t.id}" aria-label="${s.done?"標記為未完成":"標記為完成"}：${esc(t.title)}" aria-pressed="${s.done}"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></svg></button>
+      <button class="ttext" data-open="${t.id}" aria-expanded="${openSet.has(t.id)}">
+        <div class="ttitle">${esc(t.title)}</div>
+        <div class="tmeta">${t.tag?`<span class="tag">${esc(t.tag)}</span>`:""}${s.note?`<span class="tag note">有筆記</span>`:""}${t.custom?`<span class="tag">自己加的</span>`:""}</div>
+      </button>
+      <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+    <div class="tbody">
+      ${t.detail?`<p>${esc(t.detail)}</p>`:""}
+      ${t.steps?`<ol>${t.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:""}
+      <textarea class="note" data-note="${t.id}" placeholder="寫點備註…">${esc(s.note)}</textarea>
+      <div class="row" style="justify-content:space-between"><span class="saved" data-saved="${t.id}"></span>${t.custom?`<button class="more" data-del="${t.id}">刪除這項</button>`:""}</div>
+    </div>
+  </div>`;
+}
+function renderTasks(){
+  $("#taskList").innerHTML = phases().map(p => {
+    const list = p.tasks.filter(t => filter==="all" || (filter==="todo" ? !st(t).done : st(t).done));
+    if (!list.length && (filter!=="todo" || p.id==="done")) return "";
+    return `<div class="sheet"><span class="tape">${esc(p.title)}</span><p class="sub">${esc(p.sub||"")}</p>
+      ${list.length ? list.map(taskHTML).join("") : `<p class="muted">這一段都做完了 ✓</p>`}
+      ${p.id!=="done" ? `<form class="add" data-add="${p.id}"><input placeholder="加一件事…" aria-label="在${esc(p.title)}新增項目"><button class="btn small ghost">加入</button></form>` : ""}
+    </div>`;
+  }).join("") || `<p class="empty">這裡空空的。換個篩選看看？</p>`;
+}
+
+/* ---------- 發布 ---------- */
+function renderRelease(){
+  $("#releaseList").innerHTML = D.releases.map(r => `
+    <div class="sheet">
+      <span class="tape">${esc(r.status)}</span>
+      <div class="rel-head"><div><h2>${esc(r.title)}</h2><p class="sub muted" style="margin:4px 0 0">${esc(r.subtitle||"")}</p></div></div>
+      <ol class="timeline">${r.schedule.map(s => `<li><span class="dot"></span><h4>${esc(s.day)}｜${esc(s.date)}</h4>
+        ${s.items.map(it => { const t = allTasks().find(x=>x.id===it.task); const done = t ? st(t).done : false;
+          return `<div class="mini ${done?"task done":"task"}" style="border:0"><button class="check" data-toggle="${it.task}" aria-pressed="${done}" aria-label="完成：${esc(it.what)}"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></svg></button><span class="plat ${esc(it.platform)}">${esc(it.platform)}</span><span class="ttitle">${esc(it.what)}</span></div>`; }).join("")}
+      </li>`).join("")}</ol>
+    </div>
+    <div class="sheet"><span class="tape r">〈${esc(r.title)}〉文案</span>
+      ${r.copy.map((c,i) => copyBlock(c.label, c.text, c.platform, `${r.id}-${i}`)).join("")}
+    </div>`).join("");
+  $("#formulaList").innerHTML = D.formula.map(f => `<li>${esc(f)}</li>`).join("");
+}
+const copyStore = {};
+function copyBlock(label, text, platform, key){
+  copyStore[key] = text;
+  const long = text.split("\n").length > 7;
+  const pcls = platform ? platform.replace(":","").replace(/^9/,"p9") : "";
+  return `<div class="copyblock"><div class="cb-head"><strong>${platform?`<span class="plat ${esc(pcls)}">${esc(platform)}</span> `:""}${esc(label)}</strong><button class="btn small" data-copy="${key}">複製</button></div>
+    <pre class="copytext ${long?"clamp":""}" id="pre-${key}">${esc(text)}</pre>${long?`<button class="more" data-expand="${key}">展開全文</button>`:""}</div>`;
+}
+
+/* ---------- 品牌 ---------- */
+function renderBrand(){
+  const b = D.brand, v = b.voice;
+  $("#brandWrap").innerHTML = `
+    <div class="sheet"><span class="tape">說話的樣子</span>
+      <p style="margin:0 0 6px;font-size:17px">${esc(v.summary)}</p>
+      <div class="dd"><div><h4>要</h4><ul>${v.do.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>
+      <div><h4>不要</h4><ul>${v.dont.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></div>
+      ${v.examples.map(x=>`<p class="quote">${esc(x)}</p>`).join("")}
+    </div>
+    <div class="sheet"><span class="tape r">互動問題庫</span><p class="sub">三秒就能回答的問題。點一下複製，貼在置頂留言或文案結尾。</p>
+      <div class="qlist">${b.questions.map((q,i)=>{copyStore["q"+i]=q;return `<button data-copy="q${i}">${esc(q)}</button>`;}).join("")}</div>
+    </div>
+    <div class="sheet"><span class="tape">顏色</span><p class="sub">點色塊複製色碼。</p>
+      <div class="swatches">${b.colors.map((c,i)=>{copyStore["c"+i]=c.hex;return `<button class="swatch" data-copy="c${i}"><i style="background:${c.hex}"></i><span>${esc(c.name)}<br><span class="muted">${c.hex}</span></span></button>`;}).join("")}</div>
+    </div>
+    <div class="sheet"><span class="tape r">字體與尺寸</span>
+      <table><tbody>${b.fonts.map(f=>`<tr><td>${esc(f.use)}</td><td>${esc(f.name)}</td></tr>`).join("")}</tbody></table>
+      <hr class="soft">
+      <table><tbody>${b.specs.map(s=>`<tr><td>${esc(s.item)}</td><td>${esc(s.size)}</td></tr>`).join("")}</tbody></table>
+    </div>
+    <div class="sheet"><span class="tape">生圖 Prompt</span>${b.prompts.map((p,i)=>copyBlock(p.label,p.text,"",`p${i}`)).join("")}</div>
+    <div class="sheet"><span class="tape r">頻道設定紀錄</span>${b.settings.map((s,i)=>copyBlock(s.label,s.text,"",`s${i}`)).join("")}</div>`;
+}
+
+/* ---------- 筆記 ---------- */
+let editing = null;
+function renderNotes(){
+  $("#stickies").innerHTML = S.notes.length ? S.notes.map(n => `<div class="sticky" data-nid="${n.id}">
+    ${editing===n.id ? `<textarea data-edit="${n.id}">${esc(n.text)}</textarea>` : `<p>${esc(n.text)}</p>`}
+    <footer><span>${new Date(n.t).toLocaleDateString("zh-TW")}</span><span>${editing===n.id?`<button data-savenote="${n.id}">存好</button>`:`<button data-editnote="${n.id}">修改</button>`}<button data-delnote="${n.id}">撕掉</button></span></footer>
+  </div>`).join("") : `<p class="empty">還沒有便利貼。</p>`;
+}
+
+/* ---------- 路由 ---------- */
+const pages = ["home","tasks","release","brand","notes"];
+function route(){
+  const h = location.hash.slice(1); const p = pages.includes(h) ? h : "home";
+  $$(".page").forEach(el => el.classList.toggle("active", el.id === "page-"+p));
+  document.body.classList.toggle("on-home", p==="home");
+  $$("nav.tabs a").forEach(a => a.setAttribute("aria-current", a.dataset.tab===p ? "page" : "false"));
+  renderAll();
+}
+function renderAll(){ renderClock(); renderHome(); renderTasks(); renderRelease(); renderBrand(); renderNotes(); }
+window.addEventListener("hashchange", () => { route(); window.scrollTo({top:0}); });
+
+/* ---------- 事件 ---------- */
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-toggle],[data-open],[data-copy],[data-expand],[data-go],[data-quickdone],[data-del],[data-filter],[data-editnote],[data-savenote],[data-delnote],[data-close],[data-apply]");
+  if (!el) return;
+  const d = el.dataset;
+  if (d.toggle){ const t = allTasks().find(x=>x.id===d.toggle); if(!t) return; const nd=!st(t).done; setDone(t.id, nd); toast(nd?"做完了 ✓":"改回未完成"); renderAll(); }
+  else if (d.open){ openSet.has(d.open)?openSet.delete(d.open):openSet.add(d.open); renderTasks(); }
+  else if (d.copy){ copy(copyStore[d.copy]); }
+  else if (d.expand){ const p=$("#pre-"+d.expand); const on=p.classList.toggle("clamp"); el.textContent = on?"展開全文":"收起"; }
+  else if (d.go){ openSet.add(d.go); filter="all"; syncChips(); location.hash="tasks"; setTimeout(()=>{ const t=$("#t-"+d.go); t&&t.scrollIntoView({behavior:"smooth",block:"center"}); },60); }
+  else if (d.quickdone){ setDone(d.quickdone,true); toast("做完了 ✓ 下一件"); renderAll(); }
+  else if (d.del){ if(confirm("確定刪除這一項？")){ S.custom=S.custom.filter(c=>c.id!==d.del); delete S.tasks[d.del]; save(); renderAll(); } }
+  else if (d.filter){ filter=d.filter; syncChips(); renderTasks(); }
+  else if (d.editnote){ editing=d.editnote; renderNotes(); }
+  else if (d.savenote){ const ta=$(`[data-edit="${d.savenote}"]`); const n=S.notes.find(x=>x.id===d.savenote); if(n&&ta){ n.text=ta.value.trim()||n.text; save(); } editing=null; renderNotes(); renderHome(); toast("存好了"); }
+  else if (d.delnote){ if(confirm("撕掉這張便利貼？")){ S.notes=S.notes.filter(x=>x.id!==d.delnote); save(); renderNotes(); renderHome(); } }
+  else if (d.close!==undefined){ closeDrawers(); }
+  else if (d.apply){ applyActions(+d.apply, el); }
+});
+function syncChips(){ $$(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.filter===filter)); }
+
+let nt;
+document.addEventListener("input", e => {
+  const id = e.target.dataset && e.target.dataset.note; if (!id) return;
+  clearTimeout(nt); const tag=$(`[data-saved="${id}"]`); tag.textContent="…";
+  nt = setTimeout(()=>{ setNote(id, e.target.value); tag.textContent="已存好"; renderClock(); }, 500);
+});
+document.addEventListener("submit", e => {
+  const f = e.target.closest("[data-add]"); if(!f) return; e.preventDefault();
+  const v = f.querySelector("input").value.trim(); if(!v) return;
+  S.custom.push({ id:uid(), phase:f.dataset.add, title:v }); save(); toast("加進去了"); renderAll();
+});
+$("#addNote").addEventListener("click", () => {
+  const v = $("#noteInput").value.trim(); if(!v){ $("#noteInput").focus(); return; }
+  S.notes.unshift({ id:uid(), text:v, t:Date.now() }); save(); $("#noteInput").value=""; renderNotes(); renderHome(); toast("貼上去了");
+});
+
+/* ---------- 抽屜 ---------- */
+function openDrawer(id){ $("#sheetbg").classList.add("show"); $(id).classList.add("show"); }
+function closeDrawers(){ $("#sheetbg").classList.remove("show"); $$(".drawer").forEach(d=>d.classList.remove("show")); }
+$("#sheetbg").addEventListener("click", closeDrawers);
+document.addEventListener("keydown", e => { if(e.key==="Escape") closeDrawers(); });
+$("#openSettings").addEventListener("click", () => {
+  $("#apiKey").value = S.settings.apiKey; $("#apiModel").value = S.settings.model; $("#themeSel").value = S.settings.theme;
+  $("#verText").textContent = `資料版本 ${D.version}（${D.updated}）`; openDrawer("#setDrawer");
+});
+$("#openChat").addEventListener("click", () => { renderChat(); openDrawer("#chatDrawer"); setTimeout(()=>$("#chatInput").focus(),300); });
+
+/* ---------- 設定 ---------- */
+function applyTheme(){ if(S.settings.theme) document.documentElement.dataset.theme=S.settings.theme; else delete document.documentElement.dataset.theme; }
+$("#themeSel").addEventListener("change", e => { S.settings.theme=e.target.value; save(); applyTheme(); });
+$("#saveKey").addEventListener("click", () => { S.settings.apiKey=$("#apiKey").value.trim(); S.settings.model=$("#apiModel").value.trim()||"claude-sonnet-5-5"; save(); toast("儲存了"); });
+$("#clearChat").addEventListener("click", () => { if(confirm("清空對話紀錄？")){ S.chat=[]; save(); toast("清空了"); } });
+$("#resetAll").addEventListener("click", () => { if(confirm("這會清除這台裝置上的勾選、筆記和對話紀錄（API 金鑰也會清掉）。建議先下載備份檔。確定嗎？")){ S=blank(); save(); renderAll(); closeDrawers(); toast("已清除"); } });
+$("#exportBtn").addEventListener("click", () => {
+  const out = { exported:new Date().toISOString(), dataVersion:D.version, tasks:S.tasks, custom:S.custom, notes:S.notes };
+  const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob([JSON.stringify(out,null,2)],{type:"application/json"}));
+  a.download=`mellowmeow-backup-${new Date().toISOString().slice(0,10)}.json`; a.click(); URL.revokeObjectURL(a.href); toast("備份檔下載了");
+});
+$("#importFile").addEventListener("change", e => {
+  const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ try{ const j=JSON.parse(rd.result); if(!j.tasks) throw 0; S.tasks=j.tasks; S.custom=j.custom||[]; S.notes=j.notes||[]; save(); renderAll(); toast("匯入完成"); }catch(err){ toast("這不是有效的備份檔"); } };
+  rd.readAsText(f); e.target.value="";
+});
+$("#copySummary").addEventListener("click", () => copy(summary(true), "摘要已複製，貼到 Claude 就好"));
+
+function summary(forPaste){
+  const lines = [];
+  if (forPaste) lines.push("這是我 Mellow Meow 頻道專案網站的目前進度，請根據它幫我：（在這裡寫你想問的事）", "");
+  lines.push(`資料版本：${D.version}`);
+  phases().forEach(p => { lines.push(`\n【${p.title}】${p.sub||""}`); p.tasks.forEach(t => { const s=st(t); lines.push(`${s.done?"✅":"⬜"} [${t.id}] ${t.title}${s.note?`（筆記：${s.note.replace(/\n/g," ")}）`:""}`); }); });
+  if (S.notes.length){ lines.push("\n【筆記】"); S.notes.slice(0,15).forEach(n => lines.push(`- ${new Date(n.t).toLocaleDateString("zh-TW")}：${n.text.replace(/\n/g," ")}`)); }
+  return lines.join("\n");
+}
+
+/* ---------- 問 Claude ---------- */
+const QUICK = ["我今天只有 30 分鐘，先做什麼？","幫我想 3 句這週短片的字卡","幫我寫下一首歌的置頂留言","看我的筆記，數據有什麼問題？"];
+function renderChat(){
+  $("#quickAsks").innerHTML = QUICK.map(q=>`<button data-q="${esc(q)}">${esc(q)}</button>`).join("");
+  const body = $("#chatBody");
+  if (!S.settings.apiKey){
+    body.innerHTML = `<div class="msg ai">還沒設定 API 金鑰，所以沒辦法直接在這裡對話。
+
+兩種用法：
+1. 按「複製進度摘要」，貼到 Claude App 裡問，Claude 會照你的進度回答。
+2. 到右上角齒輪設定自己的 API 金鑰（費用另計），之後就能在這裡直接聊，Claude 也能幫你新增待辦、勾選、寫筆記。</div>
+      <div class="row"><button class="btn small" id="cSum">複製進度摘要</button><button class="btn small ghost" id="cSet">設定金鑰</button></div>`;
+    $("#cSum").onclick = () => copy(summary(true), "摘要已複製，貼到 Claude 就好");
+    $("#cSet").onclick = () => { closeDrawers(); setTimeout(()=>$("#openSettings").click(),200); };
+    return;
+  }
+  body.innerHTML = S.chat.length ? S.chat.map((m,i)=>msgHTML(m,i)).join("") : `<div class="msg ai">嗨，今天也辛苦了。想先處理哪一件？我看得到你的待辦和筆記。</div>`;
+  body.scrollTop = body.scrollHeight;
+}
+function parseActions(text){
+  const m = text.match(/```mm-actions\s*([\s\S]*?)```/); if(!m) return { clean:text, actions:null };
+  let actions=null; try{ actions=JSON.parse(m[1]); if(!Array.isArray(actions)) actions=null; }catch(e){}
+  return { clean:text.replace(m[0],"").trim(), actions };
+}
+function describe(a){
+  const t = a.id && allTasks().find(x=>x.id===a.id);
+  if(a.type==="add_task") return `新增待辦到「${(D.phases.find(p=>p.id===a.phase)||{}).title||a.phase}」：${a.title}`;
+  if(a.type==="set_done") return `${a.done?"勾選完成":"改回未完成"}：${t?t.title:a.id}`;
+  if(a.type==="set_note") return `寫筆記到「${t?t.title:a.id}」：${a.note}`;
+  if(a.type==="add_note") return `新增便利貼：${a.text}`;
+  return "（看不懂的變更，會略過）";
+}
+function msgHTML(m,i){
+  if(m.role==="user") return `<div class="msg user">${esc(m.content)}</div>`;
+  if(m.role==="error") return `<div class="msg err">${esc(m.content)}</div>`;
+  const { clean, actions } = parseActions(m.content);
+  return `<div class="msg ai">${esc(clean)}${actions&&actions.length?`<div class="actions"><strong>Claude 建議這些變更：</strong><ul>${actions.map(a=>`<li>${esc(describe(a))}</li>`).join("")}</ul>${m.applied?`<span class="muted">已套用 ✓</span>`:`<button class="btn small" data-apply="${i}">套用變更</button>`}</div>`:""}</div>`;
+}
+function applyActions(i){
+  const m=S.chat[i]; if(!m||m.applied) return; const { actions }=parseActions(m.content); if(!actions) return;
+  actions.forEach(a=>{
+    if(a.type==="add_task" && a.title && D.phases.some(p=>p.id===a.phase)) S.custom.push({ id:uid(), phase:a.phase, title:String(a.title), detail:a.detail?String(a.detail):undefined });
+    else if(a.type==="set_done" && a.id) setDone(a.id, !!a.done);
+    else if(a.type==="set_note" && a.id) setNote(a.id, String(a.note||""));
+    else if(a.type==="add_note" && a.text) S.notes.unshift({ id:uid(), text:String(a.text), t:Date.now() });
+  });
+  m.applied=true; save(); renderAll(); renderChat(); toast("變更套用了");
+}
+function systemPrompt(){
+  return `你是小R的頻道經營夥伴，正在協助經營 YouTube／Instagram 頻道「Mellow Meow｜下班後的小陪伴」（原創 lo-fi 歌曲，角色是戴奶油色耳機的黑貓）。
+小R 是普通上班族，時間有限。請用繁體中文、口語、簡短回答，給具體可以馬上做的事。
+
+經營守則：
+${D.rules.map(r=>"- "+r).join("\n")}
+
+文案語氣：${D.brand.voice.summary}
+要：${D.brand.voice.do.join("；")}
+不要：${D.brand.voice.dont.join("；")}
+
+目前進度：
+${summary(false)}
+
+如果你想幫小R修改網站上的進度，在回答最後加一個區塊（小R 會按按鈕確認才套用）：
+\`\`\`mm-actions
+[{"type":"add_task","phase":"B","title":"…","detail":"…"},{"type":"set_done","id":"b1","done":true},{"type":"set_note","id":"b2","note":"…"},{"type":"add_note","text":"…"}]
+\`\`\`
+phase 只能是 ${D.phases.filter(p=>p.id!=="done").map(p=>p.id+"（"+p.title+"）").join("、")}。沒有要改就不要加這個區塊。`;
+}
+let busy=false;
+async function send(text){
+  text=(text||"").trim(); if(!text||busy) return;
+  if(!S.settings.apiKey){ renderChat(); return; }
+  busy=true; $("#sendChat").disabled=true;
+  S.chat.push({ role:"user", content:text }); save(); renderChat();
+  const body=$("#chatBody"); const typing=document.createElement("div"); typing.className="msg ai"; typing.textContent="想一下…"; body.appendChild(typing); body.scrollTop=body.scrollHeight;
+  try{
+    const history = S.chat.filter(m=>m.role==="user"||m.role==="assistant").slice(-12).map(m=>({ role:m.role, content:m.content }));
+    const res = await fetch("https://api.anthropic.com/v1/messages",{ method:"POST", headers:{ "content-type":"application/json", "x-api-key":S.settings.apiKey, "anthropic-version":"2023-06-01", "anthropic-dangerous-direct-browser-access":"true" },
+      body: JSON.stringify({ model:S.settings.model||"claude-sonnet-5-5", max_tokens:1500, system:systemPrompt(), messages:history }) });
+    const j = await res.json().catch(()=>({}));
+    if(!res.ok){
+      const why = res.status===401 ? "API 金鑰不正確，請到設定重新貼上。" : res.status===404 ? "找不到這個模型名稱，請到設定確認模型。" : res.status===429 ? "請求太頻繁或額度用完了，等一下再試，或到 Anthropic Console 檢查額度。" : `連線失敗（${res.status}）：${(j.error&&j.error.message)||"請稍後再試"}`;
+      S.chat.push({ role:"error", content:why });
+    } else {
+      const out = (j.content||[]).filter(c=>c.type==="text").map(c=>c.text).join("\n").trim() || "（沒有收到回覆內容）";
+      S.chat.push({ role:"assistant", content:out });
+    }
+  }catch(err){ S.chat.push({ role:"error", content:"網路連線失敗，請確認網路後再試一次。" }); }
+  save(); busy=false; $("#sendChat").disabled=false; renderChat();
+}
+$("#sendChat").addEventListener("click", () => { const v=$("#chatInput").value; $("#chatInput").value=""; send(v); });
+$("#chatInput").addEventListener("keydown", e => { if(e.key==="Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); $("#sendChat").click(); } });
+$("#chatInput").addEventListener("input", e => { e.target.style.height="auto"; e.target.style.height=Math.min(e.target.scrollHeight,140)+"px"; });
+$("#quickAsks").addEventListener("click", e => { const b=e.target.closest("[data-q]"); if(!b) return; if(!S.settings.apiKey){ copy(summary(true).replace("（在這裡寫你想問的事）", b.dataset.q), "摘要已複製，貼到 Claude 就好"); return; } send(b.dataset.q); });
+
+applyTheme(); route();
+})();
+</script>
+</body>
+</html>

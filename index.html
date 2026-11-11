@@ -766,7 +766,7 @@ function detailHTML(id){
   return `<div class="card">
     <span class="label"><i></i>${esc(t.phaseTitle)}${t.tag?"・"+esc(t.tag):""}</span>
     <h2>${esc(t.title)}</h2>
-    ${t.detail?`<p class="muted" style="margin:0">${esc(t.detail)}</p>`:""}
+    ${t.detail?`<p class="muted" style="margin:0;word-break:break-word">${linkify(t.detail)}</p>`:""}
     ${t.steps?`<ol class="steps">${t.steps.map(x=>`<li>${esc(x)}</li>`).join("")}</ol>`:""}
     <label class="label" for="note-${t.id}" style="margin-top:14px"><i></i>我的筆記</label>
     <textarea class="ruled" id="note-${t.id}" data-note="${t.id}" placeholder="寫點備註…">${esc(s.note)}</textarea>

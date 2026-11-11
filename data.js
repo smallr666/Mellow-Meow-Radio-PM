@@ -5,8 +5,8 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.10-4",
-  updated: "2026-11-10",
+  version: "2026.11.11-1",
+  updated: "2026-11-11",
 
   rules: [
     "主力只經營 YouTube 和 Instagram，Threads 只用 IG 發文時的「分享到 Threads」順手帶過。",
@@ -69,7 +69,7 @@ window.MM_DATA = {
     {
       id: "B",
       title: "La La 上線準備",
-      sub: "11/20（五）之前",
+      sub: "11/13（五）之前",
       tasks: [
         {
           id: "b1",
@@ -93,17 +93,17 @@ window.MM_DATA = {
         },
         {
           id: "b4",
-          title: "做 IG 歌詞填空卡「La la, no more ＿＿」",
+          title: "確認 Claude 在 Figma 做好的歌詞填空卡，匯出 PNG",
           tag: "IG 4:5",
-          detail: "一張圖：把歌詞「La la, no more worries」的 worries 挖空，讓觀眾填自己最想 no more 的事。內容在「發布」分頁。Canva 開 1080×1350，用 La La 的天空藍和奶油白，英文用 Cormorant Garamond、La la 用手寫體。",
-          steps: ["Canva 開 1080×1350，背景用 La La 封面的天空藍（可以放模糊雲朵）", "上方小字：La La｜歌詞填空", "中間大字：La la, no more ________", "下面一行中文：La la，＿＿＿ 都先別管了", "底部小字：你最想 no more 的是什麼？留言填空 ☁️", "匯出 PNG"]
+          detail: "已放在 Figma「Setting」頁，圖層名稱「IG｜La La 歌詞填空卡 1080x1350」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6014-24 。所有文字、雲朵、顆粒都是可以直接修改的圖層。",
+          steps: ["打開上面的 Figma 連結，點選整個畫框", "右側 Export → PNG、1x（已經是 1080×1350）", "用手機看一次，確認字夠大、沒有錯字", "想改文字或配色就告訴 Claude"]
         },
         {
           id: "b5",
-          title: "上傳 La La，排定首播 11/20（五）20:00",
+          title: "上傳 La La，排定首播 11/13（五）21:00",
           tag: "YT",
           detail: "標題、說明欄、標籤都在「發布」分頁複製。",
-          steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄；上傳縮圖", "顯示更多 → 變造或合成內容：選「是」", "貼上標籤", "瀏覽權限 → 排定時間 → 勾「設為首播」→ 11/20 20:00"]
+          steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄；上傳縮圖", "顯示更多 → 變造或合成內容：選「是」", "貼上標籤", "瀏覽權限 → 排定時間 → 勾「設為首播」→ 11/13 21:00"]
         },
         {
           id: "b6",
@@ -116,11 +116,11 @@ window.MM_DATA = {
     {
       id: "C",
       title: "上線當天",
-      sub: "11/20（五）晚上",
+      sub: "11/13（五）晚上",
       tasks: [
         {
           id: "c1",
-          title: "20:00 首播開始後，發置頂留言",
+          title: "21:00 首播開始後，發置頂留言",
           tag: "YT",
           detail: "留言內容在「發布」分頁。發完後點留言旁的「⋮」→「置頂」。"
         },
@@ -148,7 +148,7 @@ window.MM_DATA = {
     {
       id: "D",
       title: "上線後",
-      sub: "11/23（一）起",
+      sub: "11/16（一）起",
       tasks: [
         {
           id: "d1",
@@ -164,7 +164,7 @@ window.MM_DATA = {
         },
         {
           id: "d3",
-          title: "11/27 看一次數據，記在筆記",
+          title: "11/20 看一次數據，記在筆記",
           tag: "數據",
           detail: "只看三個數字就好：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。寫進「筆記」，下次跟 Claude 討論時貼給它。"
         },
@@ -209,12 +209,12 @@ window.MM_DATA = {
       id: "lala",
       title: "La La",
       subtitle: "sunny day, stay with me",
-      date: "2026-11-20T20:00:00+08:00",
+      date: "2026-11-13T21:00:00+08:00",
       status: "準備中",
       schedule: [
         {
           day: "第 1 波",
-          date: "11/20（五）20:00",
+          date: "11/13（五）21:00",
           items: [
             { platform: "YT", what: "歌詞影片首播＋置頂留言", task: "c1" },
             { platform: "IG", what: "Reel（順手分享到 Threads）", task: "c2" }
@@ -222,7 +222,7 @@ window.MM_DATA = {
         },
         {
           day: "第 2 波",
-          date: "11/23（一）21:00",
+          date: "11/16（一）21:00",
           items: [
             { platform: "YT", what: "Short（同一支短片）", task: "d1" },
             { platform: "IG", what: "歌詞填空圖卡（La la, no more ＿＿）", task: "d2" }
@@ -283,19 +283,15 @@ Do not add any other text, emoji, stickers or decorations. Do not change any exi
 說明：完整版〈La La〉在頻道首頁。今天也辛苦了。`
         },
         {
-          label: "Reel 文案（11/20 週五）",
+          label: "Reel 文案（11/13 週五）",
           platform: "IG",
-          text: `週五晚上 8 點，終於可以不用回訊息了 ☁️
+          text: `週五下班後的晚上，終於可以不用回訊息了 ☁️
 
 Mellow Meow 第一首歌〈La La〉
-完整版在 YouTube（主頁連結）
-
-用一句話形容你今天，我會挑幾則寫進下一首歌 👇
-
-#lofi #下班 #社畜日常 #小確幸 #chillmusic #原創歌曲 #mellowmeow`
+完整版在 YouTube（主頁連結）`
         },
         {
-          label: "歌詞填空卡內容",
+          label: "歌詞填空卡內容（Figma 已完成，可直接改圖層）",
           platform: "IG",
           text: `上方小字：La La｜歌詞填空
 
@@ -305,17 +301,17 @@ Mellow Meow 第一首歌〈La La〉
 底部小字：你最想 no more 的是什麼？留言填空 ☁️`
         },
         {
-          label: "歌詞填空卡文案（11/23 週一）",
+          label: "歌詞填空卡文案（11/16 週一）",
           platform: "IG",
-          text: `〈La La〉原本的歌詞是 La la, no more worries。
+          text: `〈La La〉原歌詞是 La la, no more worries
 
-但週一晚上，我們最想 no more 的應該是……
+但週一晚上，你最想 no more 的應該是……
 留言幫我填空，中文英文都可以 👇
-我先：no more 臨時會議。
+我先：no more 臨時會議
 
 我會挑幾則寫進下一首歌 ☁️
 
-#週一 #下班 #社畜日常 #上班族 #lofi #原創歌曲 #mellowmeow`
+#週一 #下班 #工作日常 #上班族 #lofi #mellowmeow`
         }
       ]
     }
@@ -326,7 +322,7 @@ Mellow Meow 第一首歌〈La La〉
     "做歌＋歌詞影片（16:9）",
     "剪 1 支 15–20 秒直式短片，0 秒就放字卡",
     "做 1 則 IG 歌詞互動圖卡：從這首歌挑一句做填空，或挑幾句做「用一句歌詞形容你今天」的選擇題",
-    "週五 20:00：YT 歌詞影片＋IG Reel",
+    "週五 21:00：YT 歌詞影片＋IG Reel",
     "下週一 21:00：YT Short＋IG 輪播",
     "從留言挑 3–5 則「一句話」，寫進下一首歌，並在說明欄標註",
     "隔週看一次數據，記在筆記"

@@ -5,12 +5,12 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.11-1",
+  version: "2026.11.11-3",
   updated: "2026-11-11",
 
   rules: [
     "主力只經營 YouTube 和 Instagram，Threads 只用 IG 發文時的「分享到 Threads」順手帶過。",
-    "一首歌，同一個平台最多 2 則：YT＝歌詞影片＋1 支 Short；IG＝1 支 Reel＋1 則歌詞互動圖卡。",
+    "一首歌，同一個平台最多 2 則：YT＝歌詞影片＋1 支 Short；IG＝1 支 Reel＋1 則歌詞互動輪播（7 張）。",
     "語氣像在超市後門一起放空的同事：不勵志、不雞湯、有點累但會笑。",
     "固定互動：「用一句話形容你今天」，每首歌挑幾則寫進下一首，並在說明欄標註。說到要做到。",
     "不講創作過程，不用藝術家口吻。我們都是普通上班族。"
@@ -67,116 +67,6 @@ window.MM_DATA = {
       ]
     },
     {
-      id: "B",
-      title: "La La 上線準備",
-      sub: "11/13（五）之前",
-      tasks: [
-        {
-          id: "b1",
-          title: "標題已定案（方案 A：下班那一刻）",
-          tag: "YT",
-          detail: "標題：La La｜打卡下班的那一刻 ☁️ Original Lo-fi。在「發布」分頁複製，勾起來就好。"
-        },
-        {
-          id: "b2",
-          title: "用 GPT 在現有縮圖上加一行中文",
-          tag: "YT",
-          detail: "上傳原本的 La_La_YT-Cover.jpg 給 GPT，貼上「發布」分頁的「縮圖 GPT Prompt」（已經換成方案 A 的「下班了，這段時間是你的」）。中文出錯的話，改到 Canva 用思源宋體自己加。",
-          steps: ["在 GPT 上傳 La_La_YT-Cover.jpg", "貼上「縮圖 GPT Prompt」", "檢查中文有沒有錯字、其他文字有沒有被改動", "沒問題就存成 1280×720 以上，上傳時當縮圖"]
-        },
-        {
-          id: "b3",
-          title: "檢查 Claude 做好的直式短片（Short 和 Reel 共用）",
-          tag: "9:16",
-          detail: "Claude 已經做好 LaLa_Short.mp4：21 秒、1080×1920，用最後一段副歌，結尾停在「Sunny day, stay with me」。字卡依序是「下班後」→「給自己一首歌的時間」→「好好放鬆」（不提珍奶，封面當意象就好）。",
-          steps: ["用手機戴耳機看一次，確認聲音和歌詞對得上", "確認字卡沒有被 YT／IG 的按鈕擋住", "想換字卡文字就告訴 Claude，重新輸出很快"]
-        },
-        {
-          id: "b4",
-          title: "確認 Claude 在 Figma 做好的歌詞填空卡，匯出 PNG",
-          tag: "IG 4:5",
-          detail: "已放在 Figma「Setting」頁，圖層名稱「IG｜La La 歌詞填空卡 1080x1350」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6014-24 。所有文字、雲朵、顆粒都是可以直接修改的圖層。",
-          steps: ["打開上面的 Figma 連結，點選整個畫框", "右側 Export → PNG、1x（已經是 1080×1350）", "用手機看一次，確認字夠大、沒有錯字", "想改文字或配色就告訴 Claude"]
-        },
-        {
-          id: "b5",
-          title: "上傳 La La，排定首播 11/13（五）21:00",
-          tag: "YT",
-          detail: "標題、說明欄、標籤都在「發布」分頁複製。",
-          steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄；上傳縮圖", "顯示更多 → 變造或合成內容：選「是」", "貼上標籤", "瀏覽權限 → 排定時間 → 勾「設為首播」→ 11/13 21:00"]
-        },
-        {
-          id: "b6",
-          title: "確認 IG 發文頁有沒有「分享到 Threads」",
-          tag: "Threads",
-          detail: "有的話，之後發 IG 時打開就好，Threads 等於零成本更新；沒有就直接跳過 Threads，不用另外寫。"
-        }
-      ]
-    },
-    {
-      id: "C",
-      title: "上線當天",
-      sub: "11/13（五）晚上",
-      tasks: [
-        {
-          id: "c1",
-          title: "21:00 首播開始後，發置頂留言",
-          tag: "YT",
-          detail: "留言內容在「發布」分頁。發完後點留言旁的「⋮」→「置頂」。"
-        },
-        {
-          id: "c2",
-          title: "IG 發 Reel（打開分享到 Threads）",
-          tag: "IG",
-          detail: "用 b3 剪好的那支短片，文案在「發布」分頁。"
-        },
-        {
-          id: "c3",
-          title: "La La 設為頻道預告片和精選影片",
-          tag: "YT",
-          steps: ["YouTube 工作室 → 自訂 → 版面配置", "「為尚未訂閱的觀眾提供頻道預告片」→ 選 La La", "「為回訪訂閱者推薦的影片」→ 選 La La"]
-        },
-        {
-          id: "c4",
-          title: "舊貓咪影片設為私人",
-          tag: "YT",
-          detail: "設私人可以隨時恢復，數據也會保留，不要刪除。播放特別高的 1–3 支可以先留著。",
-          steps: ["YouTube 工作室 → 內容 → Shorts 分頁", "勾選要隱藏的影片", "編輯 → 瀏覽權限 → 私人 → 更新"]
-        }
-      ]
-    },
-    {
-      id: "D",
-      title: "上線後",
-      sub: "11/16（一）起",
-      tasks: [
-        {
-          id: "d1",
-          title: "週一 21:00 發 YT Short",
-          tag: "YT",
-          detail: "同一支短片，標題和說明在「發布」分頁。"
-        },
-        {
-          id: "d2",
-          title: "週一 21:00 發 IG 歌詞填空卡",
-          tag: "IG",
-          detail: "週一晚上最多人想 no more 點什麼。文案在「發布」分頁，記得打開分享到 Threads。"
-        },
-        {
-          id: "d3",
-          title: "11/20 看一次數據，記在筆記",
-          tag: "數據",
-          detail: "只看三個數字就好：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。寫進「筆記」，下次跟 Claude 討論時貼給它。"
-        },
-        {
-          id: "d4",
-          title: "收集「一句話」留言，挑 3–5 則記進筆記",
-          tag: "互動",
-          detail: "YT 留言和 IG 留言都看。挑的時候留下帳號名稱，下一首歌的說明欄要標註「歌詞靈感來自 @某某」。這是讓觀眾願意再留言的關鍵。"
-        }
-      ]
-    },
-    {
       id: "E",
       ongoing: true,
       title: "長期節奏",
@@ -204,13 +94,12 @@ window.MM_DATA = {
     }
   ],
 
-  releases: [
+  songs: [
     {
       id: "lala",
       title: "La La",
       subtitle: "sunny day, stay with me",
       date: "2026-11-13T21:00:00+08:00",
-      status: "準備中",
       schedule: [
         {
           day: "第 1 波",
@@ -225,7 +114,7 @@ window.MM_DATA = {
           date: "11/16（一）21:00",
           items: [
             { platform: "YT", what: "Short（同一支短片）", task: "d1" },
-            { platform: "IG", what: "歌詞填空圖卡（La la, no more ＿＿）", task: "d2" }
+            { platform: "IG", what: "歌詞填空輪播（7 張）", task: "d2" }
           ]
         }
       ],
@@ -291,17 +180,18 @@ Mellow Meow 第一首歌〈La La〉
 完整版在 YouTube（主頁連結）`
         },
         {
-          label: "歌詞填空卡內容（Figma 已完成，可直接改圖層）",
+          label: "歌詞填空輪播：7 張的內容（Figma 已完成）",
           platform: "IG",
-          text: `上方小字：La La｜歌詞填空
-
-中間大字：La la, no more ________
-下面一行：La la，＿＿＿ 都先別管了
-
-底部小字：你最想 no more 的是什麼？留言填空 ☁️`
+          text: `01｜封面：La la, no more ＿＿／副歌缺一個字，換你來填。（黑貓：往右滑 →）
+02｜原歌詞：La la, no more worries／La la，煩惱都先別管了 → 但週一晚上，這句好像不太夠用。
+03｜上班族版本 1：no more 臨時會議／17:55，行事曆突然多了一個「快速對一下」。
+04｜上班族版本 2：no more 下班後的群組訊息／手機一亮，就知道今晚又不是自己的了。
+05｜上班族版本 3：no more 週一／這個應該不用解釋。
+06｜換你填空：La la, no more ＿＿＿／換你了：你最想 no more 的是？（黑貓：我先：no more 臨時會議）
+07｜頻道介紹：Mellow Meow／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，週一晚上再聽一次`
         },
         {
-          label: "歌詞填空卡文案（11/16 週一）",
+          label: "歌詞填空輪播文案（11/16 週一）",
           platform: "IG",
           text: `〈La La〉原歌詞是 La la, no more worries
 
@@ -313,15 +203,188 @@ Mellow Meow 第一首歌〈La La〉
 
 #週一 #下班 #工作日常 #上班族 #lofi #mellowmeow`
         }
+      ],
+      phases: [
+    {
+      id: "B",
+      title: "La La 上線準備",
+      sub: "11/13（五）之前",
+      tasks: [
+        {
+          id: "b1",
+          title: "標題已定案（方案 A：下班那一刻）",
+          tag: "YT",
+          detail: "標題：La La｜打卡下班的那一刻 ☁️ Original Lo-fi。在「發布」分頁複製，勾起來就好。"
+        },
+        {
+          id: "b2",
+          title: "用 GPT 在現有縮圖上加一行中文",
+          tag: "YT",
+          detail: "上傳原本的 La_La_YT-Cover.jpg 給 GPT，貼上「發布」分頁的「縮圖 GPT Prompt」（已經換成方案 A 的「下班了，這段時間是你的」）。中文出錯的話，改到 Canva 用思源宋體自己加。",
+          steps: ["在 GPT 上傳 La_La_YT-Cover.jpg", "貼上「縮圖 GPT Prompt」", "檢查中文有沒有錯字、其他文字有沒有被改動", "沒問題就存成 1280×720 以上，上傳時當縮圖"]
+        },
+        {
+          id: "b3",
+          title: "檢查 Claude 做好的直式短片（Short 和 Reel 共用）",
+          tag: "9:16",
+          detail: "Claude 已經做好 LaLa_Short.mp4：21 秒、1080×1920，用最後一段副歌，結尾停在「Sunny day, stay with me」。字卡依序是「下班後」→「給自己一首歌的時間」→「好好放鬆」（不提珍奶，封面當意象就好）。",
+          steps: ["用手機戴耳機看一次，確認聲音和歌詞對得上", "確認字卡沒有被 YT／IG 的按鈕擋住", "想換字卡文字就告訴 Claude，重新輸出很快"]
+        },
+        {
+          id: "b4",
+          title: "確認 Claude 在 Figma 做好的歌詞填空輪播（7 張），匯出 PNG",
+          tag: "IG 4:5",
+          detail: "已放在 Figma「Setting」頁的區塊「IG｜La La 歌詞填空輪播（7 張）」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6022-36 。7 張共用同一個背景元件「MM/IG Sky BG」，改一次就全部更新。",
+          steps: ["打開上面的 Figma 連結", "按住 Shift 依序點選 01～07 七個畫框", "右側 Export → PNG、1x → 匯出", "IG 發文時照 01→07 的順序選圖"]
+        },
+        {
+          id: "b5",
+          title: "上傳 La La，排定首播 11/13（五）21:00",
+          tag: "YT",
+          detail: "標題、說明欄、標籤都在「發布」分頁複製。",
+          steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄；上傳縮圖", "顯示更多 → 變造或合成內容：選「是」", "貼上標籤", "瀏覽權限 → 排定時間 → 勾「設為首播」→ 11/13 21:00"]
+        },
+        {
+          id: "b6",
+          title: "確認 IG 發文頁有沒有「分享到 Threads」",
+          tag: "Threads",
+          detail: "有的話，之後發 IG 時打開就好，Threads 等於零成本更新；沒有就直接跳過 Threads，不用另外寫。"
+        }
+      ]
+    },
+    {
+      id: "C",
+      title: "上線當天",
+      sub: "11/13（五）晚上",
+      tasks: [
+        {
+          id: "c1",
+          title: "21:00 首播開始後，發置頂留言",
+          tag: "YT",
+          detail: "留言內容在「發布」分頁。發完後點留言旁的「⋮」→「置頂」。"
+        },
+        {
+          id: "c2",
+          title: "IG 發 Reel（打開分享到 Threads）",
+          tag: "IG",
+          detail: "用 b3 剪好的那支短片，文案在「發布」分頁。"
+        },
+        {
+          id: "c3",
+          title: "La La 設為頻道預告片和精選影片",
+          tag: "YT",
+          steps: ["YouTube 工作室 → 自訂 → 版面配置", "「為尚未訂閱的觀眾提供頻道預告片」→ 選 La La", "「為回訪訂閱者推薦的影片」→ 選 La La"]
+        },
+        {
+          id: "c4",
+          title: "舊貓咪影片設為私人",
+          tag: "YT",
+          detail: "設私人可以隨時恢復，數據也會保留，不要刪除。播放特別高的 1–3 支可以先留著。",
+          steps: ["YouTube 工作室 → 內容 → Shorts 分頁", "勾選要隱藏的影片", "編輯 → 瀏覽權限 → 私人 → 更新"]
+        }
+      ]
+    },
+    {
+      id: "D",
+      title: "上線後",
+      sub: "11/16（一）起",
+      tasks: [
+        {
+          id: "d1",
+          title: "週一 21:00 發 YT Short",
+          tag: "YT",
+          detail: "同一支短片，標題和說明在「發布」分頁。"
+        },
+        {
+          id: "d2",
+          title: "週一 21:00 發 IG 歌詞填空輪播",
+          tag: "IG",
+          detail: "週一晚上最多人想 no more 點什麼。文案在「發布」分頁，記得打開分享到 Threads。"
+        },
+        {
+          id: "d3",
+          title: "11/20 看一次數據，記在筆記",
+          tag: "數據",
+          detail: "只看三個數字就好：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。寫進「筆記」，下次跟 Claude 討論時貼給它。"
+        },
+        {
+          id: "d4",
+          title: "收集「一句話」留言，挑 3–5 則記進筆記",
+          tag: "互動",
+          detail: "YT 留言和 IG 留言都看。挑的時候留下帳號名稱，下一首歌的說明欄要標註「歌詞靈感來自 @某某」。這是讓觀眾願意再留言的關鍵。"
+        }
       ]
     }
+      ]
+    },
+    {
+      id: "song2",
+      title: "第 2 首（未命名）",
+      subtitle: "歌名決定後告訴 Claude",
+      date: "2026-11-27T21:00:00+08:00"
+    }
+  ],
+
+  songTemplate: {
+    phases: [
+      {
+        id: "B",
+        title: "準備",
+        sub: "{friShort} 之前",
+        tasks: [
+          { id: "b1", title: "從上一首的留言挑 1 句「一句話」，寫進這首歌", tag: "互動", detail: "這是對觀眾的承諾：說要寫進歌裡，就要真的寫。記下是誰的留言，說明欄要標註。" },
+          { id: "b2", title: "歌曲完成，決定歌名", tag: "音樂" },
+          { id: "b3", title: "做歌詞影片（16:9）", tag: "YT" },
+          { id: "b4", title: "跟 Claude 一起想：標題＋縮圖字＋說明欄開頭", tag: "YT", detail: "到「發布」分頁按「複製請求給 Claude」，貼上歌詞一起產出。" },
+          { id: "b5", title: "用 GPT 在縮圖上加一行中文", tag: "YT" },
+          { id: "b6", title: "直式短片（Short 和 Reel 共用）", tag: "9:16", detail: "副歌 15–20 秒，0 秒就放字卡。可以請 Claude 直接做。" },
+          { id: "b7", title: "IG 歌詞互動輪播 7 張", tag: "IG 4:5", detail: "照「發布」分頁的輪播固定架構。可以請 Claude 在 Figma 直接做，背景元件共用。" },
+          { id: "b8", title: "上傳並排定首播 {fri}", tag: "YT", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → {fri}"] }
+        ]
+      },
+      {
+        id: "C",
+        title: "上線當天",
+        sub: "{friShort} 晚上",
+        tasks: [
+          { id: "c1", title: "21:00 首播開始後，發置頂留言", tag: "YT" },
+          { id: "c2", title: "IG 發 Reel（打開分享到 Threads）", tag: "IG" },
+          { id: "c3", title: "設為頻道的精選影片", tag: "YT" }
+        ]
+      },
+      {
+        id: "D",
+        title: "上線後",
+        sub: "{mon} 起",
+        tasks: [
+          { id: "d1", title: "週一 21:00 發 YT Short", tag: "YT" },
+          { id: "d2", title: "週一 21:00 發 IG 歌詞互動輪播", tag: "IG" },
+          { id: "d3", title: "{check} 看一次數據，記在筆記", tag: "數據", detail: "只看三個數字：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。" },
+          { id: "d4", title: "收集「一句話」留言，挑 3–5 則記進筆記", tag: "互動" }
+        ]
+      }
+    ],
+    schedule: [
+      { day: "第 1 波", date: "{fri}", items: [ { platform: "YT", what: "歌詞影片首播＋置頂留言", task: "c1" }, { platform: "IG", what: "Reel（順手分享到 Threads）", task: "c2" } ] },
+      { day: "第 2 波", date: "{mon}", items: [ { platform: "YT", what: "Short（同一支短片）", task: "d1" }, { platform: "IG", what: "歌詞互動輪播（7 張）", task: "d2" } ] }
+    ]
+  },
+
+  carouselFormula: [
+    "01 封面：一句 hook，大字、一眼看懂（例如：副歌缺一個字，換你來填）",
+    "02 情境：交代原歌詞或背景，最後一句轉折，讓人想往下滑",
+    "03–05 三個示範：同一個版型、一張只講一件事、編號 01／02／03，用上班族的真實小事；背景放符合情境的寫實照片＋壓暗",
+    "06 換你：互動頁，明確告訴觀眾要留言什麼，黑貓先示範一個答案",
+    "07 頻道介紹：Mellow Meow 是誰、什麼時候更新、提醒收藏",
+    "易讀性：所有背景都要壓暗（深藍漸層），白字才看得清楚；共用背景元件已內建壓暗層",
+    "文案：照輪播順序用口語寫一次，結尾放互動指令"
   ],
 
   formula: [
     "選一句上班族的真實小事當主題（週一、加班、第幾杯咖啡、等主管先走…）",
     "做歌＋歌詞影片（16:9）",
     "剪 1 支 15–20 秒直式短片，0 秒就放字卡",
-    "做 1 則 IG 歌詞互動圖卡：從這首歌挑一句做填空，或挑幾句做「用一句歌詞形容你今天」的選擇題",
+    "做 1 則 IG 歌詞互動輪播（7 張，照下方固定架構）",
     "週五 21:00：YT 歌詞影片＋IG Reel",
     "下週一 21:00：YT Short＋IG 輪播",
     "從留言挑 3–5 則「一句話」，寫進下一首歌，並在說明欄標註",
@@ -380,6 +443,10 @@ Mellow Meow 第一首歌〈La La〉
       { item: "IG 輪播", size: "1080×1350（4:5）" }
     ],
     prompts: [
+      {
+        label: "輪播情境照片（寫實，4:5）",
+        text: `Realistic candid photograph, [情境：例如 late afternoon in a modern Taipei office / night inside a Taipei MRT train / rainy Monday morning near an MRT station]. Faces not visible (over-the-shoulder, from behind, or hands only). Soft natural light, cool blue tones with small warm highlights, shallow depth of field, soft film grain, slightly desaturated muted colors, quiet tired after-work mood, 35mm film photography look. No readable text, no logos, no visible faces. Portrait 4:5.`
+      },
       {
         label: "角色頭像（扁平簡約）",
         text: `Minimalist flat illustration of a black cat wearing cream headphones, eyes gently closed, head tilted slightly upward as if enjoying music. Simple rounded shapes, cat drawn as a soft solid black silhouette with almost no fur detail, only a few simple lines for the face. Muted dusty sky-blue background, desaturated pastel palette, low contrast, lots of empty space. Mid-century children's book style, gouache texture, slightly uneven hand-drawn edges, subtle risograph grain. Calm, quiet, cozy. No text. Square 1:1.

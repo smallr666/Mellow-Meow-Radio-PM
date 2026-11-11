@@ -263,6 +263,7 @@ a{color:var(--sky-deep)}
 .polaroid .ph{position:relative;aspect-ratio:1/1;border-radius:3px;overflow:hidden;background:linear-gradient(180deg,#8FB3DD,#C9DCF0 70%,#F4EEE3 70%)}
 .polaroid .ph .catsvg{position:absolute;width:62%;height:auto;left:19%;bottom:6%}
 .polaroid p{margin:10px 0 0;text-align:center;color:#55505C;font-size:14px}
+.songtitle.cjk{font-family:var(--font);font-size:38px;font-weight:800;line-height:1.3;margin:10px 0 4px}
 .songtitle{font-family:var(--script);font-weight:400;font-size:64px;line-height:1;margin:6px 0 2px}
 .wave{display:flex;align-items:flex-end;gap:3px;height:28px;margin:10px 0 4px}
 .wave i{width:4px;border-radius:2px;background:var(--sky);height:30%}
@@ -483,6 +484,29 @@ hr.soft{border:0;border-top:1px dashed var(--line);margin:18px 0}
 /* 共享元素轉場（支援的瀏覽器才有） */
 ::view-transition-old(root),::view-transition-new(root){animation:none}
 ::view-transition-group(tasktitle){animation-duration:.45s;animation-timing-function:cubic-bezier(.2,.8,.2,1)}
+
+/* ---------- 多首歌：狀態、切換 ---------- */
+.spill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:800;border-radius:99px;padding:1px 9px;white-space:nowrap;line-height:1.7}
+.spill::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.spill.active{background:var(--accent-soft);color:var(--accent-ink)}
+.spill.planned{background:color-mix(in srgb,var(--sky) 18%,transparent);color:var(--sky-deep)}
+.spill.released{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+.spill.channel{background:var(--surface-3);color:var(--ink-2)}
+.songtabs{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;scrollbar-width:none;scroll-snap-type:x mandatory}
+.songtab{flex:none;scroll-snap-align:start;display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:150px;text-align:left;border:1.5px solid var(--line);background:var(--surface-solid);border-radius:18px;padding:10px 14px;box-shadow:var(--shadow-1);transition:transform .25s cubic-bezier(.3,1.4,.5,1),border-color .2s,box-shadow .2s}
+.songtab:hover{transform:translateY(-2px)}
+.songtab b{font-size:16px;line-height:1.3}
+.songtab small{color:var(--ink-3);font-weight:700;font-size:12.5px}
+.songtab[aria-selected="true"]{border-color:var(--ink);box-shadow:var(--shadow-2)}
+.songtab.released{opacity:.82}
+.songrows{display:grid;gap:8px;margin-top:4px}
+.songrow{display:grid;grid-template-columns:minmax(0,1fr) auto;row-gap:7px;column-gap:10px;align-items:center;text-decoration:none;color:var(--ink);padding:8px 10px;border-radius:12px;transition:background .2s}
+.songrow:hover{background:var(--surface-2)}
+.songrow .shead{display:flex;align-items:center;gap:8px;min-width:0}
+.songrow .sname{font-weight:700;font-size:15px;line-height:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.songrow .t{grid-column:1/-1;height:7px;border-radius:99px;background:var(--surface-3);overflow:hidden}
+.songrow .t i{display:block;height:100%;background:var(--sky);border-radius:99px}
+.songrow .sc{text-align:right;color:var(--ink-3);font-weight:700;font-size:13px}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -598,6 +622,10 @@ hr.soft{border:0;border-top:1px dashed var(--line);margin:18px 0}
     <label class="field"><span>模型</span><input id="apiModel" placeholder="claude-sonnet-5-5"></label>
     <div class="row"><button class="btn small" id="saveKey">儲存</button><button class="btn small ghost" id="clearChat">清空對話紀錄</button></div>
     <hr class="soft">
+    <h4 style="margin:0">預覽多首歌</h4>
+    <label class="row" style="margin:8px 0;cursor:pointer"><input type="checkbox" id="demoToggle" style="width:18px;height:18px"> <span>加一首「已發布」的示範歌，看看多首歌時的樣子</span></label>
+    <p class="muted" style="font-size:13px;margin:0">示範歌不會出現在進度摘要裡，關掉就消失。</p>
+    <hr class="soft">
     <p class="muted" id="verText" style="font-size:13px"></p>
     <button class="btn small ghost" id="resetAll">清除這台裝置的所有進度</button>
   </div>
@@ -642,12 +670,42 @@ function applyTheme(){
 $("#themeBtn").addEventListener("click", () => { S.settings.theme = document.documentElement.dataset.theme==="dark" ? "light" : "dark"; save(); applyTheme(); });
 
 /* ---------- 任務資料 ---------- */
-const phases = () => D.phases.map(p => ({ ...p, tasks:[...p.tasks, ...S.custom.filter(c=>c.phase===p.id).map(c=>({...c,custom:true}))] }));
-const allTasks = () => phases().flatMap(p => p.tasks.map(t => ({...t, phase:p.id, phaseTitle:p.title, ongoing:!!p.ongoing})));
+const DAY = 86400000;
+const WD = "日一二三四五六";
+const fmtD = (t, time=true) => { const d=new Date(t); return `${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）${time?` ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`:""}`; };
+const DEMO_SONGS = [{ id:"demo-sunday", title:"Sunday Laundry", subtitle:"（示範用，不是真的歌）", date:"2026-10-30T21:00:00+08:00", demo:true, allDone:true }];
+const fillTpl = (str, s) => !str ? str : str.replace(/\{title\}/g, s.title).replace(/\{fri\}/g, fmtD(s.t)).replace(/\{mon\}/g, fmtD(s.t+3*DAY)).replace(/\{check\}/g, fmtD(s.t+7*DAY,false)).replace(/\{friShort\}/g, fmtD(s.t,false));
+function songList(){
+  const base = [...(S.settings.demo ? DEMO_SONGS : []), ...(D.songs||[])].map(s=>({...s, t:new Date(s.date).getTime()})).sort((a,b)=>a.t-b.t);
+  const now = Date.now(); let activeSet = false;
+  base.forEach(s=>{
+    if (s.status && s.status!=="auto") return;
+    if (now >= s.t + 7*DAY || s.allDone) s.status = "released";
+    else if (!activeSet){ s.status = "active"; activeSet = true; }
+    else s.status = "planned";
+  });
+  if (!activeSet){ const p = base.find(s=>s.status==="planned"); if (p) p.status="active"; }
+  return base;
+}
+function songPhases(s){
+  const raw = s.phases || D.songTemplate.phases.map(p=>({ id:`${s.id}-${p.id}`, title:p.title, sub:fillTpl(p.sub,s),
+    tasks:p.tasks.map(t=>({...t, id:`${s.id}-${t.id}`, title:fillTpl(t.title,s), detail:fillTpl(t.detail,s), steps:t.steps&&t.steps.map(x=>fillTpl(x,s)), done: s.allDone ? true : undefined })) }));
+  return raw.map(p=>({ ...p, songId:s.id, songTitle:s.title }));
+}
+function songSchedule(s){
+  if (s.schedule) return s.schedule;
+  return D.songTemplate.schedule.map(w=>({ day:w.day, date:fillTpl(w.date,s), items:w.items.map(it=>({...it, task:`${s.id}-${it.task}`})) }));
+}
+const STATUS = { released:"已發布", active:"進行中", planned:"規劃中", channel:"頻道" };
+const withCustom = p => ({ ...p, tasks:[...p.tasks, ...S.custom.filter(c=>c.phase===p.id).map(c=>({...c,custom:true}))] });
+const channelPhases = () => D.phases.map(p=>withCustom({...p, songId:null}));
+const phases = () => [...channelPhases(), ...songList().flatMap(s=>songPhases(s).map(withCustom))];
+const allTasks = () => phases().flatMap(p => p.tasks.map(t => ({...t, phase:p.id, phaseTitle:p.title, songId:p.songId, songTitle:p.songTitle, ongoing:!!p.ongoing})));
+const activeSong = () => songList().find(s=>s.status==="active");
 const st = t => { const s=S.tasks[t.id]; return { done: s && "done" in s ? s.done : !!t.done, note:(s&&s.note)||"" }; };
 const setDone = (id,done) => { S.tasks[id]=Object.assign(S.tasks[id]||{}, {done}); save(); };
 const setNote = (id,note) => { S.tasks[id]=Object.assign(S.tasks[id]||{}, {note}); save(); };
-const roundTasks = () => allTasks().filter(t => !t.ongoing);
+const roundTasks = () => { const a=activeSong(); return allTasks().filter(t => !t.ongoing && (t.songId===null || (a && t.songId===a.id))); };
 
 /* ---------- 共用元件 ---------- */
 const CHECK = `<svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg>`;
@@ -692,8 +750,8 @@ function renderTop(page){
 function viewHome(){
   const rt = roundTasks(); const left = rt.filter(t=>!st(t).done).length; const pct = Math.round((rt.length-left)/rt.length*100);
   const next = rt.find(t=>!st(t).done);
-  const r = D.releases[0]; const days = r ? Math.ceil((new Date(r.date)-Date.now())/86400000) : 0;
-  const ph = phases().filter(p=>p.id!=="done");
+  const r = activeSong(); const days = r ? Math.ceil((r.t-Date.now())/DAY) : 0; const rs = r ? songSchedule(r) : [];
+  const songs = songList();
   const note = S.notes[0];
   return `
   <div class="grid home">
@@ -703,7 +761,7 @@ function viewHome(){
         <span class="label"><i></i>這一輪的進度</span>
         <p class="big">${left ? `還差 <b>${left}</b> 件事<span class="br"></span>就能下班` : `全部做完，今天準時下班 🧋`}</p>
         <div class="bar"><i style="width:${pct}%"></i></div>
-        <small>已完成 ${pct}%（不含長期節奏）</small>
+        <small>已完成 ${pct}%${r?`（頻道設定＋〈${esc(r.title)}〉）`:""}</small>
       </div>
       <span class="sill"></span>
     </section>
@@ -717,14 +775,15 @@ function viewHome(){
 
     ${r ? `<section class="card count span-4 tilt">
       <span class="disc" aria-hidden="true"></span>
-      <span class="label">下一首</span>
-      ${days>0 ? `<div class="n">${days}</div><p>天後首播〈${esc(r.title)}〉<br>${r.schedule.map(s=>esc(s.date)).join("、")}</p>` : `<div class="n" style="font-size:34px">已上線</div><p>〈${esc(r.title)}〉</p>`}
+      <span class="label">進行中的歌</span>
+      ${days>0 ? `<div class="n">${days}</div><p>天後首播〈${esc(r.title)}〉<br>${rs.map(s=>esc(s.date)).join("、")}</p>` : `<div class="n" style="font-size:34px">已上線</div><p>〈${esc(r.title)}〉上線後的收尾中</p>`}
       <a class="btn small ghost" href="#release">看發布計畫</a>
     </section>` : ""}
 
     <section class="card span-4 tilt">
-      <span class="label"><i></i>各階段</span>
-      ${ph.map(p=>{ const n=p.tasks.length, d=p.tasks.filter(t=>st(t).done).length; return `<div class="pbar"><span>${esc(p.title)}</span><span class="t"><i style="width:${n?d/n*100:0}%"></i></span><span>${d}/${n}</span></div>`; }).join("")}
+      <span class="label"><i></i>歌曲進度</span>
+      <div class="songrows">${songs.map(s=>{ const ts=songPhases(s).flatMap(p=>p.tasks); const n=ts.length, d=ts.filter(t=>st(t).done).length;
+        return `<a class="songrow" href="#release" data-rel="${s.id}"><span class="shead"><span class="spill ${s.status}">${STATUS[s.status]}</span><span class="sname">${esc(s.title)}</span></span><span class="sc" title="${esc(fmtD(s.t,false))}">${d}/${n}</span><span class="t"><i style="width:${n?d/n*100:0}%"></i></span></a>`; }).join("")}</div>
     </section>
 
     <section class="card span-4 tilt">
@@ -741,9 +800,18 @@ function viewHome(){
 }
 
 /* ---------- 待辦 ---------- */
-let filter = "todo"; let selected = null;
+let filter = "todo"; let selected = null; let scope = null; let relScope = null;
+function scopes(){ const ss=songList(); return [...ss.filter(s=>s.status==="active"), ...ss.filter(s=>s.status==="planned"), {id:"channel", title:"頻道設定", status:"channel"}, ...ss.filter(s=>s.status==="released").reverse()]; }
+function scopeTabs(cur, attr){
+  return `<div class="songtabs" role="tablist" aria-label="切換歌曲">${scopes().map(s=>{
+    const ts = s.id==="channel" ? channelPhases().filter(p=>!p.ongoing).flatMap(p=>p.tasks) : songPhases(s).flatMap(p=>p.tasks);
+    const n=ts.length, d=ts.filter(t=>st(t).done).length;
+    return `<button class="songtab ${s.status}" role="tab" aria-selected="${cur===s.id}" ${attr}="${s.id}"><span class="spill ${s.status}">${STATUS[s.status]}</span><b>${esc(s.title)}</b><small>${s.id==="channel"?`${d}/${n}`:`${esc(fmtD(s.t,false))}・${d}/${n}`}</small></button>`; }).join("")}</div>`;
+}
 function viewTasks(){
-  const list = phases().map(p=>{
+  if (!scope || !scopes().some(s=>s.id===scope)) scope = (activeSong()||{id:"channel"}).id;
+  const scopePhases = scope==="channel" ? channelPhases() : (()=>{ const s=songList().find(x=>x.id===scope); return s ? songPhases(s).map(withCustom) : []; })();
+  const list = scopePhases.map(p=>{
     const items = p.tasks.filter(t => filter==="all" || (filter==="todo" ? !st(t).done : st(t).done));
     if (!items.length && (filter!=="todo" || p.id==="done")) return "";
     const n=p.tasks.length, d=p.tasks.filter(t=>st(t).done).length;
@@ -753,7 +821,8 @@ function viewTasks(){
         <span class="tt">${esc(t.title)}</span>${s.note?`<span class="tag note">筆記</span>`:""}${t.tag?`<span class="tag">${esc(t.tag)}</span>`:""}</div>`; }).join("") : `<p class="muted" style="padding:10px 14px;margin:0">這一段都做完了 ✓</p>`}
       ${p.id!=="done" ? `<form class="addrow" data-add="${p.id}"><input placeholder="加一件事…" aria-label="在${esc(p.title)}新增"><button class="btn small ghost">加入</button></form>` : ""}</div></div>`;
   }).join("") || `<p class="empty">這裡空空的，換個篩選看看。</p>`;
-  return `<p class="page-sub">點一項看步驟和寫筆記，點方框直接打勾。</p>
+  return `<p class="page-sub">先選一首歌（或頻道設定），再看它的待辦。點一項看步驟，點方框直接打勾。</p>
+  ${scopeTabs(scope,"data-scope")}
   <div class="chips" role="group" aria-label="篩選">
     ${[["todo","還沒做"],["all","全部"],["done","做完了"]].map(([k,v])=>`<button class="chip" data-filter="${k}" aria-pressed="${filter===k}">${v}</button>`).join("")}
   </div>
@@ -787,7 +856,7 @@ function cblock(label, text, platform, key){
   <pre class="ct ${long?"clamp":""}" id="pre-${key}">${esc(text)}</pre>${long?`<button class="linkbtn" data-expand="${key}">展開全文</button>`:""}</div>`;
 }
 function deckHTML(r){
-  const items = r.schedule.flatMap((s,si)=>s.items.map(it=>({...it, when:s.date, wave:si})));
+  const items = songSchedule(r).flatMap((s,si)=>s.items.map(it=>({...it, when:s.date, wave:si})));
   const n = items.length, mid = (n-1)/2;
   const frameOf = it => /Short|Reel/.test(it.what) ? "f916" : /輪播|圖卡/.test(it.what) ? "f45" : "f169";
   return `<div class="deck" id="deck-${r.id}" aria-label="這首歌的 ${n} 則發文">${items.map((it,i)=>{ const t=allTasks().find(x=>x.id===it.task); const done=t?st(t).done:false;
@@ -795,19 +864,27 @@ function deckHTML(r){
     return `<div class="dcard ${done?"done":""}" style="--sx:${sx}px;--sr:${sr}deg;--fx:${fx};--fy:${fy}px;--fr:${fr}deg;--z:${n-i};--k:${i}" title="${esc(it.what)}">
       <span class="chipx ${esc(it.platform)}">${esc(it.platform)}</span>
       <div class="thumb"><div class="frame ${frameOf(it)}"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#catFace"/></svg></div></div>
-      <span class="cap">${frameOf(it)==="f169"?"歌詞影片":frameOf(it)==="f45"?"互動圖卡":it.platform==="YT"?"Short":"Reel"}</span><span class="when">${esc(it.when.replace(/（.*/,""))}</span></div>`; }).join("")}</div>
+      <span class="cap">${frameOf(it)==="f169"?"歌詞影片":frameOf(it)==="f45"?"輪播":it.platform==="YT"?"Short":"Reel"}</span><span class="when">${esc(it.when.replace(/（.*/,""))}</span></div>`; }).join("")}</div>
   <p class="deckhint">一首歌就這 ${n} 則，做完的會打勾</p>`;
 }
 function viewRelease(){
-  return `<p class="page-sub">一首歌，每個平台最多兩則。文案按「複製」就能貼。</p>` + D.releases.map(r=>`
+  if (!relScope || !songList().some(s=>s.id===relScope)) relScope = (activeSong()||songList()[0]||{}).id;
+  const r = songList().find(s=>s.id===relScope);
+  const songsOnly = scopes().filter(s=>s.id!=="channel");
+  const tabs = `<div class="songtabs" role="tablist" aria-label="切換歌曲">${songsOnly.map(s=>{ const ts=songPhases(s).flatMap(p=>p.tasks); const n=ts.length,d=ts.filter(t=>st(t).done).length;
+    return `<button class="songtab ${s.status}" role="tab" aria-selected="${relScope===s.id}" data-relscope="${s.id}"><span class="spill ${s.status}">${STATUS[s.status]}</span><b>${esc(s.title)}</b><small>${esc(fmtD(s.t,false))}・${d}/${n}</small></button>`; }).join("")}</div>`;
+  if (!r) return `<p class="page-sub">還沒有歌曲。</p>`;
+  const sch = songSchedule(r); const copies = r.copy || [];
+  copyStore["ask-"+r.id] = `這是我 Mellow Meow 頻道的下一首歌〈${r.title}〉，預計 ${fmtD(r.t)} 首播。請照網站的發布公式和品牌語氣，幫我產出：標題＋縮圖字＋說明欄、置頂留言、Short 字卡、Reel 文案、IG 輪播 7 張的內容和文案。\n（歌詞／歌曲感覺：在這裡貼上）`;
+  return `<p class="page-sub">一首歌，每個平台最多兩則。上方切換歌曲，文案按「複製」就能貼。</p>${tabs}
   <div class="book">
     <div class="rings" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <div class="pagecard"><div class="stickyside">
-      <span class="label"><i></i>${esc(r.status)}</span>
-      <h2 class="songtitle">${esc(r.title)}</h2>
+      <span class="label"><i></i><span class="spill ${r.status}">${STATUS[r.status]}</span>${r.demo?"　示範資料":""}</span>
+      <h2 class="songtitle ${/[^\x00-\x7F]/.test(r.title)?"cjk":""}">${esc(r.title)}</h2>
       <p class="muted" style="margin:0;font-style:italic">${esc(r.subtitle||"")}</p>
       <div class="wave" aria-hidden="true">${Array.from({length:22},(_,i)=>`<i style="animation-delay:${(i*.09).toFixed(2)}s"></i>`).join("")}</div>
-      <ol class="tl">${r.schedule.map(s=>`<li><span class="dot"></span><h4>${esc(s.day)}｜${esc(s.date)}</h4>
+      <ol class="tl">${sch.map(s=>`<li><span class="dot"></span><h4>${esc(s.day)}｜${esc(s.date)}</h4>
         ${s.items.map(it=>{ const t=allTasks().find(x=>x.id===it.task); const done=t?st(t).done:false;
           return `<div class="mini ${done?"done":""}"><button class="check" data-toggle="${it.task}" aria-pressed="${done}" aria-label="完成：${esc(it.what)}">${CHECK}</button><span class="plat ${esc(it.platform)}">${esc(it.platform)}</span><span class="what">${esc(it.what)}</span></div>`; }).join("")}
       </li>`).join("")}</ol>
@@ -815,10 +892,11 @@ function viewRelease(){
     </div></div>
     <div class="pagecard">
       <span class="label"><i></i>〈${esc(r.title)}〉文案</span>
-      ${r.copy.map((c,i)=>cblock(c.label,c.text,c.platform,`${r.id}-${i}`)).join("")}
+      ${copies.length ? copies.map((c,i)=>cblock(c.label,c.text,c.platform,`${r.id}-${i}`)).join("") : `<div class="emptyd" style="padding:24px 6px">${catSVG("cat4")}<p style="margin:6px 0 14px">這首歌的文案還沒寫。<br>歌做好之後，把歌詞貼給 Claude 一起產出。</p><button class="btn small accent copy" data-copy="ask-${r.id}">複製請求給 Claude</button></div>`}
     </div>
-  </div>`).join("") + `
-  <section class="card" style="margin-top:22px"><span class="label"><i></i>每首歌的發布公式</span><ol class="formula">${D.formula.map(f=>`<li>${esc(f)}</li>`).join("")}</ol></section>`;
+  </div>
+  <section class="card" style="margin-top:22px"><span class="label"><i></i>每首歌的發布公式</span><ol class="formula">${D.formula.map(f=>`<li>${esc(f)}</li>`).join("")}</ol></section>
+  ${D.carouselFormula ? `<section class="card" style="margin-top:18px"><span class="label"><i></i>IG 輪播的固定架構（7 張）</span><ol class="formula">${D.carouselFormula.map(f=>`<li>${esc(f)}</li>`).join("")}</ol></section>` : ""}`;
 }
 
 /* ---------- 品牌 ---------- */
@@ -981,7 +1059,7 @@ function burst(el){
 
 /* ---------- 事件 ---------- */
 document.addEventListener("click", async e => {
-  const el = e.target.closest("[data-toggle],[data-select],[data-copy],[data-expand],[data-go],[data-quickdone],[data-del],[data-filter],[data-editnote],[data-savenote],[data-canceledit],[data-delnote],[data-close],[data-apply],[data-chat],[data-rmdraft],[data-q]");
+  const el = e.target.closest("[data-toggle],[data-select],[data-copy],[data-expand],[data-go],[data-quickdone],[data-del],[data-filter],[data-editnote],[data-savenote],[data-canceledit],[data-delnote],[data-close],[data-apply],[data-chat],[data-rmdraft],[data-q],[data-scope],[data-relscope],[data-rel]");
   if (!el) return; const d = el.dataset;
   if (d.toggle){ e.stopPropagation(); const t=allTasks().find(x=>x.id===d.toggle); if(!t) return; const nd=!st(t).done;
     if (nd) burst(el); setDone(t.id,nd); toast(nd?"做完了 ✓":"改回未完成");
@@ -994,7 +1072,10 @@ document.addEventListener("click", async e => {
     } else { $$(".titem").forEach(x=>x.classList.toggle("sel",x.dataset.select===selected)); openTask(selected); } }
   else if (d.copy){ copy(copyStore[d.copy], el.classList.contains("copy")?el:null); }
   else if (d.expand){ const p=$("#pre-"+d.expand); const on=p.classList.toggle("clamp"); el.textContent=on?"展開全文":"收起"; }
-  else if (d.go){ selected=d.go; filter="todo"; location.hash="tasks"; if(!isDesk()) setTimeout(()=>openTask(d.go),350); }
+  else if (d.scope){ scope=d.scope; selected=null; render(false); }
+  else if (d.relscope){ relScope=d.relscope; render(false); const b=$(".book"); if(b) b.classList.add("opening"); }
+  else if (d.rel && !d.toggle){ relScope=d.rel; }
+  else if (d.go){ selected=d.go; filter="todo"; { const tk=allTasks().find(x=>x.id===d.go); scope = tk ? (tk.songId||"channel") : scope; } location.hash="tasks"; if(!isDesk()) setTimeout(()=>openTask(d.go),350); }
   else if (d.quickdone){ burst(el); setDone(d.quickdone,true); toast("做完了 ✓ 下一件"); setTimeout(()=>render(false),reduce?0:260); }
   else if (d.del){ if(confirm("確定刪除這一項？")){ S.custom=S.custom.filter(c=>c.id!==d.del); delete S.tasks[d.del]; selected=null; save(); closeDrawers(); render(false); } }
   else if (d.filter){ filter=d.filter; render(false); }
@@ -1038,7 +1119,7 @@ function openTask(id){ $("#taskDrawerBody").innerHTML = detailHTML(id); openDraw
 $("#scrim").addEventListener("click", closeDrawers);
 addEventListener("keydown", e => { if(e.key==="Escape") closeDrawers(); });
 $("#openSettings").addEventListener("click", () => {
-  $("#apiKey").value=S.settings.apiKey; $("#apiModel").value=S.settings.model;
+  $("#apiKey").value=S.settings.apiKey; $("#apiModel").value=S.settings.model; $("#demoToggle").checked=!!S.settings.demo;
   $("#verText").textContent=`資料版本 ${D.version}（${D.updated}）`;
   const kb = Math.round((localStorage.getItem(KEY)||"").length*2/1024);
   $("#storageInfo").textContent = `目前使用約 ${kb} KB（瀏覽器上限通常約 5,000 KB）`;
@@ -1046,6 +1127,7 @@ $("#openSettings").addEventListener("click", () => {
 });
 
 /* ---------- 設定／備份 ---------- */
+$("#demoToggle").addEventListener("change", e => { S.settings.demo = e.target.checked; save(); render(false); toast(e.target.checked ? "已加入示範歌" : "示範歌已移除"); });
 $("#saveKey").addEventListener("click", () => { S.settings.apiKey=$("#apiKey").value.trim(); S.settings.model=$("#apiModel").value.trim()||"claude-sonnet-5-5"; save(); toast("儲存了"); });
 $("#clearChat").addEventListener("click", () => { if(confirm("清空對話紀錄？")){ S.chat=[]; save(); toast("清空了"); } });
 $("#resetAll").addEventListener("click", () => { if(confirm("這會清除這台裝置上的勾選、筆記、圖片和對話紀錄（API 金鑰也會清掉）。建議先下載備份檔。確定嗎？")){ S=blank(); save(); applyTheme(); render(false); closeDrawers(); toast("已清除"); } });
@@ -1063,10 +1145,14 @@ $("#copySummary").addEventListener("click", e => copy(summary(true), null, "摘�
 function summary(forPaste){
   const L=[]; if(forPaste) L.push("這是我 Mellow Meow 頻道專案網站的目前進度，請根據它幫我：（在這裡寫你想問的事）","");
   L.push(`資料版本：${D.version}`);
-  phases().forEach(p=>{ L.push(`\n【${p.title}】${p.sub||""}`); p.tasks.forEach(t=>{ const s=st(t); L.push(`${s.done?"✅":"⬜"} [${t.id}] ${t.title}${s.note?`（筆記：${s.note.replace(/\n/g," ")}）`:""}`); }); });
+  const line = t => { const s=st(t); return `${s.done?"✅":"⬜"} [${t.id}] ${t.title}${s.note?`（筆記：${s.note.replace(/\n/g," ")}）`:""}`; };
+  L.push("\n＝＝ 頻道 ＝＝");
+  channelPhases().forEach(p=>{ L.push(`【${p.title}】${p.sub||""}`); p.tasks.forEach(t=>L.push(line(t))); });
+  songList().filter(s=>!s.demo).forEach(s=>{ L.push(`\n＝＝ 歌曲〈${s.title}〉｜${STATUS[s.status]}｜首播 ${fmtD(s.t)} ＝＝`); songPhases(s).map(withCustom).forEach(p=>{ L.push(`【${p.title}】${p.sub||""}`); p.tasks.forEach(t=>L.push(line(t))); }); });
   if(S.notes.length){ L.push("\n【筆記】"); S.notes.slice(0,15).forEach(n=>L.push(`- ${new Date(n.t).toLocaleDateString("zh-TW")}：${(n.text||"").replace(/\n/g," ")}${n.img?"（附圖）":""}${n.link?`（連結：${n.link}）`:""}`)); }
   return L.join("\n");
 }
+
 
 /* ---------- 問 Claude ---------- */
 const QUICK=["我今天只有 30 分鐘，先做什麼？","幫我想 3 句這週短片的字卡","幫我把挑好的「一句話」變成歌詞方向","看我的筆記，數據有什麼問題？"];
@@ -1089,7 +1175,7 @@ function renderChat(){
 }
 function parseActions(text){ const m=text.match(/```mm-actions\s*([\s\S]*?)```/); if(!m) return {clean:text,actions:null}; let a=null; try{ a=JSON.parse(m[1]); if(!Array.isArray(a)) a=null; }catch(e){} return {clean:text.replace(m[0],"").trim(),actions:a}; }
 function describe(a){ const t=a.id&&allTasks().find(x=>x.id===a.id);
-  if(a.type==="add_task") return `新增待辦到「${(D.phases.find(p=>p.id===a.phase)||{}).title||a.phase}」：${a.title}`;
+  if(a.type==="add_task"){ const p=phases().find(p=>p.id===a.phase); return `新增待辦到「${p?(p.songTitle?`〈${p.songTitle}〉`:"")+p.title:a.phase}」：${a.title}`; }
   if(a.type==="set_done") return `${a.done?"勾選完成":"改回未完成"}：${t?t.title:a.id}`;
   if(a.type==="set_note") return `寫筆記到「${t?t.title:a.id}」：${a.note}`;
   if(a.type==="add_note") return `新增便利貼：${a.text}`; return "（看不懂的變更，會略過）"; }
@@ -1100,7 +1186,7 @@ function msgHTML(m,i){
   return `<div class="msg ai">${esc(clean)}${actions&&actions.length?`<div class="acts"><strong>Claude 建議這些變更：</strong><ul>${actions.map(a=>`<li>${esc(describe(a))}</li>`).join("")}</ul>${m.applied?`<span class="muted">已套用 ✓</span>`:`<button class="btn small accent" data-apply="${i}">套用變更</button>`}</div>`:""}</div>`;
 }
 function applyActions(i){ const m=S.chat[i]; if(!m||m.applied) return; const {actions}=parseActions(m.content); if(!actions) return;
-  actions.forEach(a=>{ if(a.type==="add_task"&&a.title&&D.phases.some(p=>p.id===a.phase)) S.custom.push({id:uid(),phase:a.phase,title:String(a.title),detail:a.detail?String(a.detail):undefined});
+  actions.forEach(a=>{ if(a.type==="add_task"&&a.title&&phases().some(p=>p.id===a.phase&&p.id!=="done")) S.custom.push({id:uid(),phase:a.phase,title:String(a.title),detail:a.detail?String(a.detail):undefined});
     else if(a.type==="set_done"&&a.id) setDone(a.id,!!a.done); else if(a.type==="set_note"&&a.id) setNote(a.id,String(a.note||""));
     else if(a.type==="add_note"&&a.text) S.notes.unshift({id:uid(),text:String(a.text),t:Date.now()}); });
   m.applied=true; save(); render(false); renderChat(); toast("變更套用了"); }
@@ -1120,7 +1206,7 @@ ${summary(false)}
 \`\`\`mm-actions
 [{"type":"add_task","phase":"B","title":"…","detail":"…"},{"type":"set_done","id":"b1","done":true},{"type":"set_note","id":"b2","note":"…"},{"type":"add_note","text":"…"}]
 \`\`\`
-phase 只能是 ${D.phases.filter(p=>p.id!=="done").map(p=>p.id+"（"+p.title+"）").join("、")}。沒有要改就不要加。`; }
+phase 只能是 ${phases().filter(p=>p.id!=="done").map(p=>p.id+"（"+(p.songTitle?`〈${p.songTitle}〉`:"")+p.title+"）").join("、")}。沒有要改就不要加。`; }
 let busy=false;
 async function send(text){
   text=(text||"").trim(); if(!text||busy) return; if(!S.settings.apiKey){ renderChat(); return; }

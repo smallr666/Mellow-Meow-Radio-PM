@@ -5,8 +5,8 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.18-4",
-  updated: "2026-11-18",
+  version: "2026.11.19-1",
+  updated: "2026-11-19",
 
   rules: [
     "主力只經營 YouTube 和 Instagram，Threads 只用 IG 發文時的「分享到 Threads」順手帶過。",
@@ -336,11 +336,11 @@ Mellow Meow 第一首歌〈La La〉
             { id: "song2-b2", title: "歌曲完成，歌名定案〈Still On〉", tag: "11/18（三）前・音樂" },
             { id: "song2-b9", title: "專輯封面（1:1）已完成", tag: "11/18（三）・1:1", detail: "封面已經傳給 Claude，歌詞影片使用中。", done: true },
             { id: "song2-b4", title: "YT 文案已定案（標題、縮圖字、說明欄）", tag: "11/18（三）・文案", detail: "定案內容在「發布」分頁。IG 輪播的文案等敘事方向討論完再寫。" },
-            { id: "song2-b5", title: "YT 縮圖已完成；IG 封面、Reels 封面（可請 Claude 用歌詞影片 Skill 一起做）", tag: "11/19（四）前・縮圖", detail: "YT 縮圖已經做好，請傳給 Claude。IG 4:5 和 Reels 9:16 封面可以在歌詞影片做完後，用同一套素材直接產出。" },
-            { id: "song2-b3", title: "檢查 Claude 做好的歌詞影片（戴耳機看對時）", tag: "11/19（四）前・YT", detail: "Still_On_歌詞影片_1080p60.mp4（3:00、1920×1080、60fps）。重點檢查：0:27 第一段副歌、1:01 第二段副歌、1:19 Ding-dong、2:01 最後一段副歌、2:22 和 2:46 的 Still on。", steps: ["戴耳機從頭看一次", "特別看上面這幾個時間點，歌詞是不是比歌聲早一點點出現", "有不對的時間點，記下秒數告訴 Claude，只會重算那一段"] },
+            { id: "song2-b5", title: "縮圖全部完成：YT 縮圖、YT Shorts 封面（9:16）、IG Reels 封面（4:5）", tag: "11/19（四）・縮圖", detail: "Shorts 和 Reels 封面由 Claude 用歌詞影片的素材產出：Still_On_YT-Shorts封面_1080x1920.jpg、Still_On_IG-Reels封面_1080x1350.jpg。" },
+            { id: "song2-b3", title: "檢查 Claude 修正後的歌詞影片（v2，戴耳機看對時）", tag: "11/19（四）前・YT", detail: "v2 修正：0:15 Thought by thought 提早；後半段整體重新對時（2:02 Another 延後約 1.5 秒、2:05 Nothing lost 延後、2:10 The rest of the night 多停 1.5 秒、2:13 Another 延後）；每句唱完會預告下一句（跨段落也會顯示）。", steps: ["戴耳機從頭看一次", "重點：0:15、0:28、2:02、2:05、2:10、2:13", "有不對的時間點記下秒數告訴 Claude"] },
             { id: "song2-b6", title: "檢查 Claude 做好的直式短片（Short 和 Reel 共用）", tag: "11/19（四）前・9:16", detail: "Still_On_Short.mp4（18.8 秒、1080×1920）。段落：Then I look up, it's dark outside → 第一段副歌 → But there's a light on down the street。字卡：走出公司 → 天已經黑了 → 還好，燈還亮著。" },
             { id: "song2-b8", title: "上傳並排定首播 11/20（五）21:00", tag: "11/19（四）晚上・YT", detail: "首播前一天排好，觀眾才有時間按「通知我」。", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → 11/20（五）21:00"] },
-            { id: "song2-b7", title: "IG 歌詞互動輪播（方向 C：便利商店的固定款）：確認內容後由 Claude 在 Figma 製作", tag: "11/22（日）前・IG 4:5", detail: "方向已選 C。內容草稿在「發布」分頁，確認或修改後告訴 Claude 開始做。封面頁（01）和頻道介紹頁（07）維持固定格式，中間的敘事方式每首可以不同，設計風格沿用 La La 調整後的版面（深色壓暗背景、奶油紙卡、慢喵電台標誌）。" }
+            { id: "song2-b7", title: "IG 歌詞互動輪播（方向 C）已在 Figma 完成，檢查後匯出 7 張 PNG", tag: "11/22（日）前・IG 4:5", detail: "Figma「Still On_IG便利商店固定款輪播（7 張）」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6086-190 。版面沿用 La La，03–05 換成茶葉蛋、御飯糰、熱美式的情境照片。" },
           ]
         },
         {
@@ -453,7 +453,7 @@ Mellow Meow 第二首歌〈Still On〉
 完整版在 YouTube（主頁連結）`
         },
         {
-          label: "歌詞互動輪播：方向 C「便利商店的固定款」7 張內容（待確認）",
+          label: "歌詞互動輪播：方向 C「便利商店的固定款」7 張內容（Figma 已完成）",
           platform: "IG",
           text: `01｜封面（固定格式）：系列標籤「Still On｜下班固定款」／大字手寫「Still the usual.」／下班走進便利商店，你也是直接拿那一樣嗎？（黑貓：往右滑 →）（照片：夜晚亮著的便利商店）
 02｜原歌詞：So many choices on the shelf / Still the usual for myself
@@ -465,7 +465,7 @@ Mellow Meow 第二首歌〈Still On〉
 07｜頻道介紹（固定格式）：慢喵電台／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，下班路上再聽一次`
         },
         {
-          label: "歌詞互動輪播文案（11/23（一），待確認）",
+          label: "歌詞互動輪播文案（11/23（一））",
           platform: "IG",
           text: `So many choices on the shelf,
 still the usual for myself.

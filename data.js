@@ -5,7 +5,7 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.18-1",
+  version: "2026.11.18-2",
   updated: "2026-11-18",
 
   rules: [
@@ -334,13 +334,13 @@ Mellow Meow 第一首歌〈La La〉
           tasks: [
             { id: "song2-b1", title: "從上一首的留言挑 1 句「一句話」（這首沒有留言可用，勾掉跳過）", tag: "互動", detail: "La La 目前還沒有「一句話」留言，這首先跳過。留言會留給第 3 首。" },
             { id: "song2-b2", title: "歌曲完成，歌名定案〈Still On〉", tag: "11/18（三）前・音樂" },
-            { id: "song2-b9", title: "專輯封面（1:1）：所有素材的基礎，最先做", tag: "11/18（三）前・1:1", detail: "歌詞影片、YT 縮圖、IG／Reels 封面都會用到它，所以要第一個完成。GPT Prompt 在「發布」分頁，版面沿用 La La，換成夜晚的城市。" },
-            { id: "song2-b4", title: "確認 Claude 寫好的文案（標題、縮圖字、說明欄、留言、Short、Reel、輪播）", tag: "11/18（三）前・文案", detail: "全部在「發布」分頁。標題三選一，縮圖字和說明欄開頭跟著同一個方案走。" },
-            { id: "song2-b5", title: "用封面做 YT 縮圖、IG 封面、Reels 封面（加上縮圖字）", tag: "11/19（四）前・縮圖", detail: "照 La La 的三種尺寸：YT 16:9、IG 4:5、Reels 9:16。縮圖字用你選的方案。" },
-            { id: "song2-b3", title: "做歌詞影片（16:9，畫面放專輯封面）", tag: "11/19（四）前・YT", detail: "沿用 La La 的版型：唱片封套＋黑膠＋逐字歌詞，所以封面要先完成。" },
+            { id: "song2-b9", title: "專輯封面（1:1）已完成，傳給 Claude", tag: "11/18（三）・1:1", detail: "封面已經做好。請在這個對話把封面圖傳給 Claude，歌詞影片會用到。" },
+            { id: "song2-b4", title: "YT 文案已定案（標題、縮圖字、說明欄）", tag: "11/18（三）・文案", detail: "定案內容在「發布」分頁。IG 輪播的文案等敘事方向討論完再寫。" },
+            { id: "song2-b5", title: "YT 縮圖已完成；IG 封面、Reels 封面（可請 Claude 用歌詞影片 Skill 一起做）", tag: "11/19（四）前・縮圖", detail: "YT 縮圖已經做好，請傳給 Claude。IG 4:5 和 Reels 9:16 封面可以在歌詞影片做完後，用同一套素材直接產出。" },
+            { id: "song2-b3", title: "Claude 製作歌詞影片（16:9，畫面放專輯封面）", tag: "11/19（四）前・YT", detail: "沿用 La La 的版型和歌詞影片 Skill（Whisper 對時，歌詞跟著人聲出現，不會慢拍）。需要傳給 Claude：① 有人聲的最終版音檔（WAV 或 MP3）② 專輯封面 ③ YT 縮圖。全片算圖約 45–50 分鐘，最晚 11/19（四）中午前要拿到音檔。", steps: ["在「頻道翻新與轉型」對話傳音檔、封面、縮圖給 Claude", "Claude 先給 6 張關鍵畫面確認風格", "確認後算圖，完成後戴耳機檢查對時"] },
             { id: "song2-b6", title: "直式短片（從歌詞影片剪，Short 和 Reel 共用）", tag: "11/19（四）前・9:16", detail: "副歌 15–20 秒，字卡在「發布」分頁。歌詞影片做好後傳給 Claude，可以直接幫你剪。" },
             { id: "song2-b8", title: "上傳並排定首播 11/20（五）21:00", tag: "11/19（四）晚上・YT", detail: "首播前一天排好，觀眾才有時間按「通知我」。", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → 11/20（五）21:00"] },
-            { id: "song2-b7", title: "IG 歌詞互動輪播 7 張（11/23 才發，可以最後做）", tag: "11/22（日）前・IG 4:5", detail: "內容在「發布」分頁。可以請 Claude 在 Figma 直接做，背景元件和 La La 共用。" }
+            { id: "song2-b7", title: "IG 歌詞互動輪播：先和 Claude 討論敘事方向，再到 Figma 製作", tag: "11/22（日）前・IG 4:5", detail: "封面頁（01）和頻道介紹頁（07）維持固定格式，中間的敘事方式每首可以不同，設計風格沿用 La La 調整後的版面（深色壓暗背景、奶油紙卡、慢喵電台標誌）。" }
           ]
         },
         {
@@ -367,39 +367,28 @@ Mellow Meow 第一首歌〈La La〉
       ],
       copy: [
         {
-          label: "三個方案（標題＋縮圖字＋說明欄開頭，選一組；推薦 A）",
+          label: "定案：標題＋縮圖字",
           platform: "YT",
-          text: `方案 A｜天空比我先下班（推薦）
-標題：Still On｜天空比我先下班了 🌙 Original City Pop
-縮圖：天空比我先下班了
-開頭：走出公司，天已經黑了。
-　　　還好街角那盞燈，還亮著。
-
-方案 B｜還亮著的燈
-標題：Still On｜下班路上，那盞還亮著的燈 🌙 Original City Pop
-縮圖：還好，那盞燈還亮著
-開頭：加班後的回家路上，總有一盞燈還沒關。
-　　　今天，就到這裡吧。
-
-方案 C｜不只你一個
-標題：Still On｜這麼晚還在回家路上的，不只你 🌙 Original City Pop
-縮圖：今晚，不只你一個人下班
-開頭：這麼晚還走在回家路上的，不只你一個。
-　　　找一盞燈，慢慢走回去就好。`
+          text: `標題：Still On｜那盞燈還亮著 🌙 Original City Pop
+縮圖：天空比我先下班了`
         },
         {
-          label: "影片說明欄（以方案 A 為例，換方案只要換前兩行）",
+          label: "影片說明欄（定案，照固定格式）",
           platform: "YT",
-          text: `走出公司，天已經黑了。
-還好街角那盞燈，還亮著。
+          text: `走出公司，天已經黑了
+但，還好街角那盞燈，還亮著。
 
-💬 留言用一句話形容你今天，可能會被寫進下一首歌。
+💬 留言用一句話形容下班後的心情，可能會被寫進下一首歌
 🎧 新歌每隔週五上線｜https://www.youtube.com/@MellowMeow-Radio
 📷 IG｜https://www.instagram.com/mellowmeow.radio/
 
-音樂：Mellow Meow（AI 輔助創作）
+#citypop #下班音樂 #mellowmeow
 
-#citypop #下班音樂 #mellowmeow`
+
+Music by Mellow Meow Radio. Created with Suno AI and visualized through Claude. All tracks are original compositions.
+
+Copyright Notice
+ⓒ 2026 Mellow Meow Radio. All rights reserved.`
         },
         {
           label: "專輯封面 GPT Prompt（1:1，先上傳 La La 封面當版型參考）",
@@ -464,7 +453,7 @@ Mellow Meow 第二首歌〈Still On〉
 完整版在 YouTube（主頁連結）`
         },
         {
-          label: "歌詞互動輪播：7 張的內容「你的那盞燈」",
+          label: "歌詞互動輪播：方向 A「你的那盞燈」（草稿，敘事方向討論中）",
           platform: "IG",
           text: `01｜封面：天空比我先下班了。／但回家路上，總有一盞燈還亮著。（黑貓：往右滑 →）
 02｜原歌詞：The sky clocked out ahead of me / But there's a light on down the street
@@ -476,7 +465,7 @@ Mellow Meow 第二首歌〈Still On〉
 07｜頻道介紹：Mellow Meow／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，下班路上再聽一次`
         },
         {
-          label: "歌詞互動輪播文案（11/23（一））",
+          label: "歌詞互動輪播文案（11/23（一），草稿）",
           platform: "IG",
           text: `〈Still On〉裡有一句：
 The sky clocked out ahead of me, but there's a light on down the street.
@@ -511,12 +500,12 @@ The sky clocked out ahead of me, but there's a light on down the street.
           { id: "b1", title: "從上一首的留言挑 1 句「一句話」，寫進這首歌", tag: "{fri-10} 前・互動", detail: "這是對觀眾的承諾：說要寫進歌裡，就要真的寫。記下是誰的留言，說明欄要標註。沒有留言就勾掉跳過。" },
           { id: "b2", title: "歌曲完成，決定歌名", tag: "{fri-7} 前・音樂" },
           { id: "b9", title: "專輯封面（1:1）：所有素材的基礎，最先做", tag: "{fri-6} 前・1:1", detail: "歌詞影片、YT 縮圖、IG／Reels 封面都會用到封面，所以要第一個完成。" },
-          { id: "b4", title: "跟 Claude 一起產出全部文案（標題、縮圖字、說明欄、留言、Short、Reel、輪播）", tag: "{fri-6} 前・文案", detail: "到「發布」分頁按「複製請求給 Claude」，貼上歌詞一起產出。縮圖要用到縮圖字，所以文案要在縮圖之前。" },
+          { id: "b4", title: "跟 Claude 一起產出全部文案（標題、縮圖字、說明欄、留言、Short、Reel、輪播）", tag: "{fri-6} 前・文案", detail: "到「發布」分頁按「複製請求給 Claude」，貼上歌詞一起產出。說明欄照「品牌」分頁的固定格式。縮圖要用到縮圖字，所以文案要在縮圖之前。" },
           { id: "b5", title: "用封面做 YT 縮圖、IG 封面、Reels 封面（加上縮圖字）", tag: "{fri-5} 前・縮圖" },
           { id: "b3", title: "做歌詞影片（16:9，畫面放專輯封面）", tag: "{fri-4} 前・YT" },
           { id: "b6", title: "直式短片（從歌詞影片剪，Short 和 Reel 共用）", tag: "{fri-3} 前・9:16", detail: "副歌 15–20 秒，0 秒就放字卡。可以請 Claude 直接做。" },
           { id: "b8", title: "上傳並排定首播 {fri}", tag: "{fri-1} 前・YT", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → {fri}"] },
-          { id: "b7", title: "IG 歌詞互動輪播 7 張（{mon} 才發，可以最後做）", tag: "{fri+2} 前・IG 4:5", detail: "照「發布」分頁的輪播固定架構。可以請 Claude 在 Figma 直接做，背景元件共用。" }
+          { id: "b7", title: "IG 歌詞互動輪播：先和 Claude 討論敘事方向，再到 Figma 製作（{mon} 才發）", tag: "{fri+2} 前・IG 4:5", detail: "01 封面頁、07 頻道介紹頁固定格式；中間的敘事每首可以不同；設計風格沿用同一套版面。" }
         ]
       },
       {
@@ -548,14 +537,14 @@ The sky clocked out ahead of me, but there's a light on down the street.
   },
 
   carouselFormula: [
-    "01 封面：一句 hook，大字、一眼看懂（例如：副歌缺一個字，換你來填）",
-    "02 情境：交代原歌詞或背景，最後一句轉折，讓人想往下滑",
-    "03–05 三個示範：同一個版型、一張只講一件事、編號 01／02／03，用上班族的真實小事；背景放符合情境的寫實照片＋壓暗",
-    "06 換你：互動頁，明確告訴觀眾要留言什麼，黑貓先示範一個答案",
-    "07 頻道介紹：Mellow Meow 是誰、什麼時候更新、提醒收藏",
-    "易讀性：所有背景都要壓暗（深藍漸層），白字才看得清楚；共用背景元件已內建壓暗層",
+    "固定：01 封面頁（一句 hook，大字、一眼看懂）和 07 頻道介紹頁（慢喵電台、更新時間、提醒收藏）每首都用同一個格式",
+    "可變：02–06 的敘事方式每首歌可以不同（填空、清單、場景、選擇題…），製作前先和 Claude 討論方向",
+    "互動頁：最後一張內容頁要明確告訴觀眾留言什麼，黑貓先示範一個答案",
+    "設計一致：深色壓暗背景、奶油色紙卡、白色標題、頁碼 01 / 07、@mellowmeow.radio；情境照片一律壓暗",
+    "共用背景元件「MM/IG Sky BG」，在 Figma 改一次全部更新",
     "文案：照輪播順序用口語寫一次，結尾放互動指令"
   ],
+
 
   formula: [
     "選一句上班族的真實小事當主題（加班、天黑才下班、第幾杯咖啡、等主管先走…）",
@@ -667,6 +656,22 @@ New songs every other Friday, 9 PM (Taiwan time). 🐈‍⬛`
 不勵志不雞湯，只陪你喘口氣
 💬 留一句今天的心情，可能變成下一首歌
 🎧 新歌在這裡 ↓`
+      },
+      {
+        label: "YT 影片說明欄｜固定格式（每首歌照這個寫）",
+        text: `［兩行開頭：這首歌的情境，第二行以「但，…」轉折］
+
+💬 留言用一句話形容下班後的心情，可能會被寫進下一首歌
+🎧 新歌每隔週五上線｜https://www.youtube.com/@MellowMeow-Radio
+📷 IG｜https://www.instagram.com/mellowmeow.radio/
+
+#［曲風］ #下班音樂 #mellowmeow
+
+
+Music by Mellow Meow Radio. Created with Suno AI and visualized through Claude. All tracks are original compositions.
+
+Copyright Notice
+ⓒ 2026 Mellow Meow Radio. All rights reserved.`
       },
       {
         label: "YT 頻道關鍵字",

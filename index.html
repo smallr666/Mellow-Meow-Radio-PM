@@ -672,24 +672,24 @@ $("#themeBtn").addEventListener("click", () => { S.settings.theme = document.doc
 /* ---------- 任務資料 ---------- */
 const DAY = 86400000;
 const WD = "日一二三四五六";
-const fmtD = (t, time=true) => { const d=new Date(t); return `${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）${time?` ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`:""}`; };
+const fmtD = (t, time=true) => { const d=new Date(t); return `${d.getMonth()+1}/${d.getDate()}（${WD[d.getDay()]}）${time?`${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`:""}`; };
 const DEMO_SONGS = [{ id:"demo-sunday", title:"Sunday Laundry", subtitle:"（示範用，不是真的歌）", date:"2026-10-30T21:00:00+08:00", demo:true, allDone:true }];
-const fillTpl = (str, s) => !str ? str : str.replace(/\{title\}/g, s.title).replace(/\{fri\}/g, fmtD(s.t)).replace(/\{mon\}/g, fmtD(s.t+3*DAY)).replace(/\{check\}/g, fmtD(s.t+7*DAY,false)).replace(/\{friShort\}/g, fmtD(s.t,false));
+const fillTpl = (str, s) => !str ? str : str.replace(/\{fri([+-]\d+)\}/g, (_,n)=>fmtD(s.t+(+n)*DAY,false)).replace(/\{title\}/g, s.title).replace(/\{fri\}/g, fmtD(s.t)).replace(/\{mon\}/g, fmtD(s.t+3*DAY)).replace(/\{check\}/g, fmtD(s.t+7*DAY,false)).replace(/\{friShort\}/g, fmtD(s.t,false));
 function songList(){
   const base = [...(S.settings.demo ? DEMO_SONGS : []), ...(D.songs||[])].map(s=>({...s, t:new Date(s.date).getTime()})).sort((a,b)=>a.t-b.t);
   const now = Date.now(); let activeSet = false;
   base.forEach(s=>{
     if (s.status && s.status!=="auto") return;
-    if (now >= s.t + 7*DAY || s.allDone) s.status = "released";
+    if (now >= s.t || s.allDone) s.status = "released";
     else if (!activeSet){ s.status = "active"; activeSet = true; }
     else s.status = "planned";
   });
-  if (!activeSet){ const p = base.find(s=>s.status==="planned"); if (p) p.status="active"; }
+  if (!activeSet){ const last=[...base].reverse().find(s=>!s.demo); if (last) last.status="active"; }
   return base;
 }
 function songPhases(s){
   const raw = s.phases || D.songTemplate.phases.map(p=>({ id:`${s.id}-${p.id}`, title:p.title, sub:fillTpl(p.sub,s),
-    tasks:p.tasks.map(t=>({...t, id:`${s.id}-${t.id}`, title:fillTpl(t.title,s), detail:fillTpl(t.detail,s), steps:t.steps&&t.steps.map(x=>fillTpl(x,s)), done: s.allDone ? true : undefined })) }));
+    tasks:p.tasks.map(t=>({...t, id:`${s.id}-${t.id}`, title:fillTpl(t.title,s), tag:fillTpl(t.tag,s), detail:fillTpl(t.detail,s), steps:t.steps&&t.steps.map(x=>fillTpl(x,s)), done: s.allDone ? true : undefined })) }));
   return raw.map(p=>({ ...p, songId:s.id, songTitle:s.title }));
 }
 function songSchedule(s){
@@ -705,7 +705,8 @@ const activeSong = () => songList().find(s=>s.status==="active");
 const st = t => { const s=S.tasks[t.id]; return { done: s && "done" in s ? s.done : !!t.done, note:(s&&s.note)||"" }; };
 const setDone = (id,done) => { S.tasks[id]=Object.assign(S.tasks[id]||{}, {done}); save(); };
 const setNote = (id,note) => { S.tasks[id]=Object.assign(S.tasks[id]||{}, {note}); save(); };
-const roundTasks = () => { const a=activeSong(); return allTasks().filter(t => !t.ongoing && (t.songId===null || (a && t.songId===a.id))); };
+const roundTasks = () => { const a=activeSong(); const recent=new Set(songList().filter(s=>s.status==="released"&&!s.demo&&Date.now()<s.t+14*DAY).map(s=>s.id));
+  return allTasks().filter(t => !t.ongoing && (t.songId===null || (a && t.songId===a.id) || (recent.has(t.songId) && !st(t).done))); };
 
 /* ---------- 共用元件 ---------- */
 const CHECK = `<svg viewBox="0 0 20 20"><path d="M4.5 10.5l3.5 3.5 7.5-8"/></svg>`;
@@ -761,7 +762,7 @@ function viewHome(){
         <span class="label"><i></i>這一輪的進度</span>
         <p class="big">${left ? `還差 <b>${left}</b> 件事<span class="br"></span>就能下班` : `全部做完，今天準時下班 🧋`}</p>
         <div class="bar"><i style="width:${pct}%"></i></div>
-        <small>已完成 ${pct}%${r?`（頻道設定＋〈${esc(r.title)}〉）`:""}</small>
+        <small>已完成 ${pct}%${r?`（頻道、〈${esc(r.title)}〉和上一首的收尾）`:""}</small>
       </div>
       <span class="sill"></span>
     </section>

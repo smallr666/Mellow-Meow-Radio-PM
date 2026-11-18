@@ -5,8 +5,8 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.11-3",
-  updated: "2026-11-11",
+  version: "2026.11.18-1",
+  updated: "2026-11-18",
 
   rules: [
     "主力只經營 YouTube 和 Instagram，Threads 只用 IG 發文時的「分享到 Threads」順手帶過。",
@@ -172,7 +172,7 @@ Do not add any other text, emoji, stickers or decorations. Do not change any exi
 說明：完整版〈La La〉在頻道首頁。今天也辛苦了。`
         },
         {
-          label: "Reel 文案（11/13 週五）",
+          label: "Reel 文案（11/13（五））",
           platform: "IG",
           text: `週五下班後的晚上，終於可以不用回訊息了 ☁️
 
@@ -191,7 +191,7 @@ Mellow Meow 第一首歌〈La La〉
 07｜頻道介紹：Mellow Meow／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，週一晚上再聽一次`
         },
         {
-          label: "歌詞填空輪播文案（11/16 週一）",
+          label: "歌詞填空輪播文案（11/16（一））",
           platform: "IG",
           text: `〈La La〉原歌詞是 La la, no more worries
 
@@ -259,7 +259,7 @@ Mellow Meow 第一首歌〈La La〉
       tasks: [
         {
           id: "c1",
-          title: "21:00 首播開始後，發置頂留言",
+          title: "11/13（五）21:00 首播開始後，發置頂留言",
           tag: "YT",
           detail: "留言內容在「發布」分頁。發完後點留言旁的「⋮」→「置頂」。"
         },
@@ -291,27 +291,27 @@ Mellow Meow 第一首歌〈La La〉
       tasks: [
         {
           id: "d1",
-          title: "週一 21:00 發 YT Short",
+          title: "11/16（一）21:00 發 YT Short",
           tag: "YT",
           detail: "同一支短片，標題和說明在「發布」分頁。"
         },
         {
           id: "d2",
-          title: "週一 21:00 發 IG 歌詞填空輪播",
+          title: "11/16（一）21:00 發 IG 歌詞填空輪播",
           tag: "IG",
           detail: "週一晚上最多人想 no more 點什麼。文案在「發布」分頁，記得打開分享到 Threads。"
         },
         {
           id: "d3",
-          title: "11/20 看一次數據，記在筆記",
+          title: "11/20（五）看一次數據，記在筆記",
           tag: "數據",
           detail: "只看三個數字就好：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。寫進「筆記」，下次跟 Claude 討論時貼給它。"
         },
         {
           id: "d4",
-          title: "收集「一句話」留言，挑 3–5 則記進筆記",
+          title: "收集「一句話」留言，12/1（二）前挑 3–5 則記進筆記（給第 3 首用）",
           tag: "互動",
-          detail: "YT 留言和 IG 留言都看。挑的時候留下帳號名稱，下一首歌的說明欄要標註「歌詞靈感來自 @某某」。這是讓觀眾願意再留言的關鍵。"
+          detail: "〈Still On〉的歌詞已經定了，所以 La La 和 Still On 的留言一起留給第 3 首。YT 留言和 IG 留言都看。挑的時候留下帳號名稱，下一首歌的說明欄要標註「歌詞靈感來自 @某某」。這是讓觀眾願意再留言的關鍵。"
         }
       ]
     }
@@ -319,9 +319,185 @@ Mellow Meow 第一首歌〈La La〉
     },
     {
       id: "song2",
-      title: "第 2 首（未命名）",
-      subtitle: "歌名決定後告訴 Claude",
-      date: "2026-11-27T21:00:00+08:00"
+      title: "Still On",
+      subtitle: "the light's still on",
+      date: "2026-11-20T21:00:00+08:00",
+      schedule: [
+        { day: "第 1 波", date: "11/20（五）21:00", items: [ { platform: "YT", what: "歌詞影片首播＋置頂留言", task: "song2-c1" }, { platform: "IG", what: "Reel（順手分享到 Threads）", task: "song2-c2" } ] },
+        { day: "第 2 波", date: "11/23（一）21:00", items: [ { platform: "YT", what: "Short（同一支短片）", task: "song2-d1" }, { platform: "IG", what: "歌詞互動輪播（7 張）", task: "song2-d2" } ] }
+      ],
+      phases: [
+        {
+          id: "song2-B",
+          title: "準備",
+          sub: "11/20（五）之前，時間很趕，照順序做",
+          tasks: [
+            { id: "song2-b1", title: "從上一首的留言挑 1 句「一句話」（這首沒有留言可用，勾掉跳過）", tag: "互動", detail: "La La 目前還沒有「一句話」留言，這首先跳過。留言會留給第 3 首。" },
+            { id: "song2-b2", title: "歌曲完成，歌名定案〈Still On〉", tag: "11/18（三）前・音樂" },
+            { id: "song2-b9", title: "專輯封面（1:1）：所有素材的基礎，最先做", tag: "11/18（三）前・1:1", detail: "歌詞影片、YT 縮圖、IG／Reels 封面都會用到它，所以要第一個完成。GPT Prompt 在「發布」分頁，版面沿用 La La，換成夜晚的城市。" },
+            { id: "song2-b4", title: "確認 Claude 寫好的文案（標題、縮圖字、說明欄、留言、Short、Reel、輪播）", tag: "11/18（三）前・文案", detail: "全部在「發布」分頁。標題三選一，縮圖字和說明欄開頭跟著同一個方案走。" },
+            { id: "song2-b5", title: "用封面做 YT 縮圖、IG 封面、Reels 封面（加上縮圖字）", tag: "11/19（四）前・縮圖", detail: "照 La La 的三種尺寸：YT 16:9、IG 4:5、Reels 9:16。縮圖字用你選的方案。" },
+            { id: "song2-b3", title: "做歌詞影片（16:9，畫面放專輯封面）", tag: "11/19（四）前・YT", detail: "沿用 La La 的版型：唱片封套＋黑膠＋逐字歌詞，所以封面要先完成。" },
+            { id: "song2-b6", title: "直式短片（從歌詞影片剪，Short 和 Reel 共用）", tag: "11/19（四）前・9:16", detail: "副歌 15–20 秒，字卡在「發布」分頁。歌詞影片做好後傳給 Claude，可以直接幫你剪。" },
+            { id: "song2-b8", title: "上傳並排定首播 11/20（五）21:00", tag: "11/19（四）晚上・YT", detail: "首播前一天排好，觀眾才有時間按「通知我」。", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → 11/20（五）21:00"] },
+            { id: "song2-b7", title: "IG 歌詞互動輪播 7 張（11/23 才發，可以最後做）", tag: "11/22（日）前・IG 4:5", detail: "內容在「發布」分頁。可以請 Claude 在 Figma 直接做，背景元件和 La La 共用。" }
+          ]
+        },
+        {
+          id: "song2-C",
+          title: "上線當天",
+          sub: "11/20（五）晚上",
+          tasks: [
+            { id: "song2-c1", title: "11/20（五）21:00 首播開始後，發置頂留言", tag: "YT" },
+            { id: "song2-c2", title: "11/20（五）21:00 IG 發 Reel（打開分享到 Threads）", tag: "IG" },
+            { id: "song2-c3", title: "首播結束後，設為頻道的精選影片", tag: "YT" }
+          ]
+        },
+        {
+          id: "song2-D",
+          title: "上線後",
+          sub: "11/23（一）起",
+          tasks: [
+            { id: "song2-d1", title: "11/23（一）21:00 發 YT Short", tag: "YT" },
+            { id: "song2-d2", title: "11/23（一）21:00 發 IG 歌詞互動輪播", tag: "IG" },
+            { id: "song2-d3", title: "11/27（五）看一次數據，記在筆記", tag: "數據", detail: "只看三個數字：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。和 La La 比較看看。" },
+            { id: "song2-d4", title: "收集「一句話」留言，12/1（二）前挑 3–5 則記進筆記（給第 3 首用）", tag: "互動" }
+          ]
+        }
+      ],
+      copy: [
+        {
+          label: "三個方案（標題＋縮圖字＋說明欄開頭，選一組；推薦 A）",
+          platform: "YT",
+          text: `方案 A｜天空比我先下班（推薦）
+標題：Still On｜天空比我先下班了 🌙 Original City Pop
+縮圖：天空比我先下班了
+開頭：走出公司，天已經黑了。
+　　　還好街角那盞燈，還亮著。
+
+方案 B｜還亮著的燈
+標題：Still On｜下班路上，那盞還亮著的燈 🌙 Original City Pop
+縮圖：還好，那盞燈還亮著
+開頭：加班後的回家路上，總有一盞燈還沒關。
+　　　今天，就到這裡吧。
+
+方案 C｜不只你一個
+標題：Still On｜這麼晚還在回家路上的，不只你 🌙 Original City Pop
+縮圖：今晚，不只你一個人下班
+開頭：這麼晚還走在回家路上的，不只你一個。
+　　　找一盞燈，慢慢走回去就好。`
+        },
+        {
+          label: "影片說明欄（以方案 A 為例，換方案只要換前兩行）",
+          platform: "YT",
+          text: `走出公司，天已經黑了。
+還好街角那盞燈，還亮著。
+
+💬 留言用一句話形容你今天，可能會被寫進下一首歌。
+🎧 新歌每隔週五上線｜https://www.youtube.com/@MellowMeow-Radio
+📷 IG｜https://www.instagram.com/mellowmeow.radio/
+
+音樂：Mellow Meow（AI 輔助創作）
+
+#citypop #下班音樂 #mellowmeow`
+        },
+        {
+          label: "專輯封面 GPT Prompt（1:1，先上傳 La La 封面當版型參考）",
+          platform: "YT",
+          text: `Using the attached La La album cover as the layout and style reference, create a NEW square album cover for the single "Still On". Keep the same vintage record-sleeve look: cream paper border, film grain, slight scratches, soft faded colors, same typography style and the same text positions.
+
+SCENE: a quiet city street just after dark, deep dusty-blue evening sky with a few soft clouds still visible, a small corner convenience store glowing warm yellow-white at the end of the street, one hand holding a phone or a warm drink at the bottom edge (no face), wet asphalt with soft reflections. Calm, a little tired, comforting. Realistic photo feel, 35mm film, muted colors with one warm light.
+
+TEXT (render exactly):
+- top left small: "lo-fi / single"
+- under it: "01. Still On" and "02. Still On (Instrumental)"
+- large handwritten script on the right: "Still On"
+- small handwritten line under it: "the light's still on"
+- bottom right, spaced capitals: "STILL ON" / "YOU'RE NOT ALONE"
+- small barcode bottom left
+
+No other text, no logos. Square 1:1.`
+        },
+        {
+          label: "縮圖 GPT Prompt（做好封面後，上傳 La_La_YT-Cover.jpg 和新封面）",
+          platform: "YT",
+          text: `Use the first attached image (La La YouTube thumbnail) as the exact layout reference, and the second attached image (the new "Still On" album cover) as the record sleeve. Recreate the same thumbnail layout: record sleeve with a vinyl on the left, blurred background, film grain, and on the right: "LO-FI SINGLE", a large script title "Still On", the line "the light's still on", audio wave bars and "LYRIC VIDEO".
+
+Change the blurred background to a deep dusty-blue evening sky with soft warm city lights.
+Add ONE line of Traditional Chinese text: 「天空比我先下班了」 — elegant Traditional Chinese serif, cream white (#F4EEE3), between "the light's still on" and the audio wave bars, slightly larger than the English line.
+
+Keep 16:9. Do not add any other text.`
+        },
+        {
+          label: "標籤（填在「標籤」欄位）",
+          platform: "YT",
+          text: `Still On, Mellow Meow, city pop, funky city pop, chill city pop, R&B pop, 原創歌曲, 下班音樂, 上班族, 加班, 夜晚城市, 通勤音樂, 便利商店, night city music, after work music, lyric video, 華語 city pop`
+        },
+        {
+          label: "置頂留言",
+          platform: "YT",
+          text: `今天走出公司的時候，天還亮著嗎？🌙
+
+用一句話形容你今天，我會挑幾則寫進下一首歌。
+我先：電梯門還沒關，腦袋就已經下班了。`
+        },
+        {
+          label: "直式短片字卡（Short / Reel 共用）",
+          platform: "9:16",
+          text: `段落：副歌「Another ordinary day is done … But there's a light on down the street」
+字卡 1：走出公司
+字卡 2：天已經黑了
+字卡 3：還好，燈還亮著`
+        },
+        {
+          label: "Short 標題＋說明",
+          platform: "YT",
+          text: `標題：天空比我先下班了 🌙
+說明：完整版〈Still On〉在頻道首頁。今天也辛苦了。`
+        },
+        {
+          label: "Reel 文案（11/20（五））",
+          platform: "IG",
+          text: `週五晚上走出公司，天早就黑了 🌙
+
+Mellow Meow 第二首歌〈Still On〉
+完整版在 YouTube（主頁連結）`
+        },
+        {
+          label: "歌詞互動輪播：7 張的內容「你的那盞燈」",
+          platform: "IG",
+          text: `01｜封面：天空比我先下班了。／但回家路上，總有一盞燈還亮著。（黑貓：往右滑 →）
+02｜原歌詞：The sky clocked out ahead of me / But there's a light on down the street
+　　天空比我先下班，但街角還有一盞燈 → 每個人回家的路上，都有一盞自己的燈。
+03｜那盞燈 01：便利商店的燈／23:07，「歡迎光臨」是今天第一句不用回覆的話。（照片：深夜亮著的便利商店門口）
+04｜那盞燈 02：宵夜攤的燈／老闆不用問，就知道你要「一樣的」。（照片：夜晚路邊小吃攤的暖光）
+05｜那盞燈 03：玄關的燈／鑰匙一轉，今天才真的結束。（照片：夜晚開門的瞬間，只拍到手和鑰匙）
+06｜換你：下班路上，你的那盞燈是什麼？（黑貓：我先：便利商店的燈）
+07｜頻道介紹：Mellow Meow／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，下班路上再聽一次`
+        },
+        {
+          label: "歌詞互動輪播文案（11/23（一））",
+          platform: "IG",
+          text: `〈Still On〉裡有一句：
+The sky clocked out ahead of me, but there's a light on down the street.
+
+天空比我先下班了，
+但回家路上，總有一盞燈還亮著。
+
+你的那盞燈是什麼？留言告訴我 👇
+我先：便利商店的燈
+
+我會挑幾則寫進下一首歌 ☁️
+
+#下班 #工作日常 #上班族 #citypop #mellowmeow`
+        }
+      ]
+    },
+    {
+      id: "song3",
+      title: "第 3 首（未命名）",
+      subtitle: "會用上 La La、Still On 的「一句話」留言",
+      date: "2026-12-04T21:00:00+08:00"
     }
   ],
 
@@ -332,14 +508,15 @@ Mellow Meow 第一首歌〈La La〉
         title: "準備",
         sub: "{friShort} 之前",
         tasks: [
-          { id: "b1", title: "從上一首的留言挑 1 句「一句話」，寫進這首歌", tag: "互動", detail: "這是對觀眾的承諾：說要寫進歌裡，就要真的寫。記下是誰的留言，說明欄要標註。" },
-          { id: "b2", title: "歌曲完成，決定歌名", tag: "音樂" },
-          { id: "b3", title: "做歌詞影片（16:9）", tag: "YT" },
-          { id: "b4", title: "跟 Claude 一起想：標題＋縮圖字＋說明欄開頭", tag: "YT", detail: "到「發布」分頁按「複製請求給 Claude」，貼上歌詞一起產出。" },
-          { id: "b5", title: "用 GPT 在縮圖上加一行中文", tag: "YT" },
-          { id: "b6", title: "直式短片（Short 和 Reel 共用）", tag: "9:16", detail: "副歌 15–20 秒，0 秒就放字卡。可以請 Claude 直接做。" },
-          { id: "b7", title: "IG 歌詞互動輪播 7 張", tag: "IG 4:5", detail: "照「發布」分頁的輪播固定架構。可以請 Claude 在 Figma 直接做，背景元件共用。" },
-          { id: "b8", title: "上傳並排定首播 {fri}", tag: "YT", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → {fri}"] }
+          { id: "b1", title: "從上一首的留言挑 1 句「一句話」，寫進這首歌", tag: "{fri-10} 前・互動", detail: "這是對觀眾的承諾：說要寫進歌裡，就要真的寫。記下是誰的留言，說明欄要標註。沒有留言就勾掉跳過。" },
+          { id: "b2", title: "歌曲完成，決定歌名", tag: "{fri-7} 前・音樂" },
+          { id: "b9", title: "專輯封面（1:1）：所有素材的基礎，最先做", tag: "{fri-6} 前・1:1", detail: "歌詞影片、YT 縮圖、IG／Reels 封面都會用到封面，所以要第一個完成。" },
+          { id: "b4", title: "跟 Claude 一起產出全部文案（標題、縮圖字、說明欄、留言、Short、Reel、輪播）", tag: "{fri-6} 前・文案", detail: "到「發布」分頁按「複製請求給 Claude」，貼上歌詞一起產出。縮圖要用到縮圖字，所以文案要在縮圖之前。" },
+          { id: "b5", title: "用封面做 YT 縮圖、IG 封面、Reels 封面（加上縮圖字）", tag: "{fri-5} 前・縮圖" },
+          { id: "b3", title: "做歌詞影片（16:9，畫面放專輯封面）", tag: "{fri-4} 前・YT" },
+          { id: "b6", title: "直式短片（從歌詞影片剪，Short 和 Reel 共用）", tag: "{fri-3} 前・9:16", detail: "副歌 15–20 秒，0 秒就放字卡。可以請 Claude 直接做。" },
+          { id: "b8", title: "上傳並排定首播 {fri}", tag: "{fri-1} 前・YT", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → {fri}"] },
+          { id: "b7", title: "IG 歌詞互動輪播 7 張（{mon} 才發，可以最後做）", tag: "{fri+2} 前・IG 4:5", detail: "照「發布」分頁的輪播固定架構。可以請 Claude 在 Figma 直接做，背景元件共用。" }
         ]
       },
       {
@@ -347,8 +524,8 @@ Mellow Meow 第一首歌〈La La〉
         title: "上線當天",
         sub: "{friShort} 晚上",
         tasks: [
-          { id: "c1", title: "21:00 首播開始後，發置頂留言", tag: "YT" },
-          { id: "c2", title: "IG 發 Reel（打開分享到 Threads）", tag: "IG" },
+          { id: "c1", title: "{fri} 首播開始後，發置頂留言", tag: "YT" },
+          { id: "c2", title: "{fri} IG 發 Reel（打開分享到 Threads）", tag: "IG" },
           { id: "c3", title: "設為頻道的精選影片", tag: "YT" }
         ]
       },
@@ -357,10 +534,10 @@ Mellow Meow 第一首歌〈La La〉
         title: "上線後",
         sub: "{mon} 起",
         tasks: [
-          { id: "d1", title: "週一 21:00 發 YT Short", tag: "YT" },
-          { id: "d2", title: "週一 21:00 發 IG 歌詞互動輪播", tag: "IG" },
+          { id: "d1", title: "{mon} 發 YT Short", tag: "YT" },
+          { id: "d2", title: "{mon} 發 IG 歌詞互動輪播", tag: "IG" },
           { id: "d3", title: "{check} 看一次數據，記在筆記", tag: "數據", detail: "只看三個數字：YT 平均觀看時長、Short 觀看數、IG 輪播收藏數。" },
-          { id: "d4", title: "收集「一句話」留言，挑 3–5 則記進筆記", tag: "互動" }
+          { id: "d4", title: "收集「一句話」留言，{fri+11} 前挑 3–5 則記進筆記", tag: "互動" }
         ]
       }
     ],
@@ -381,15 +558,17 @@ Mellow Meow 第一首歌〈La La〉
   ],
 
   formula: [
-    "選一句上班族的真實小事當主題（週一、加班、第幾杯咖啡、等主管先走…）",
-    "做歌＋歌詞影片（16:9）",
-    "剪 1 支 15–20 秒直式短片，0 秒就放字卡",
-    "做 1 則 IG 歌詞互動輪播（7 張，照下方固定架構）",
-    "週五 21:00：YT 歌詞影片＋IG Reel",
-    "下週一 21:00：YT Short＋IG 輪播",
+    "選一句上班族的真實小事當主題（加班、天黑才下班、第幾杯咖啡、等主管先走…）",
+    "歌曲完成、歌名定案 → 先做專輯封面（之後所有素材都用它）",
+    "跟 Claude 產出全部文案 → 用封面做縮圖（YT／IG／Reels）",
+    "歌詞影片（含封面）→ 從歌詞影片剪 15–20 秒直式短片，0 秒就放字卡",
+    "首播前一天上傳並排定首播",
+    "第 1 波｜首播日 21:00：YT 歌詞影片＋IG Reel",
+    "第 2 波｜首播後第 3 天 21:00：YT Short＋IG 輪播（輪播可以在這之前再做）",
     "從留言挑 3–5 則「一句話」，寫進下一首歌，並在說明欄標註",
-    "隔週看一次數據，記在筆記"
+    "首播一週後看一次數據，記在筆記"
   ],
+
 
   brand: {
     voice: {
@@ -463,22 +642,24 @@ avoid: detailed fur strands, sharp whiskers, glossy highlights, oil painting fil
       { label: "YT Handle", text: "@MellowMeow-Radio" },
       { label: "IG 帳號", text: "mellowmeow.radio" },
       {
-        label: "YT 頻道說明（新語氣版）",
+        label: "YT 頻道說明（11/15 精簡版）",
         text: `下班了嗎？今天也辛苦了。
 
-這裡不勵志、不雞湯，
-只是一個陪你喘口氣的地方。
-一隻黑貓、一首 lo-fi，配你的通勤、加班，
-還有洗完澡不想睡、又不想面對明天的那段時間。
+這裡不勵志、不雞湯，只是一個陪你喘口氣的地方。
+Mellow 是放鬆，Meow 是一隻戴著耳機的黑貓，
+陪你走過通勤、加班，還有不想睡的夜晚。
 
+🎧 新歌每隔週五 21:00 上線
 💬 留言用一句話形容你今天，可能會被寫進下一首歌。
-🎧 新歌每隔週五上線
-🎵 音樂為 AI 輔助創作
+
+音樂與畫面使用 AI 工具製作，
+主題、歌詞方向、畫面與留言選句，由我親手整理完成。
+請勿重新上傳或轉載。
 
 ───────────
-Off work? Same.
-No pep talks here — just a black cat, some lo-fi,
-and a few minutes to breathe before tomorrow happens again. 🐈‍⬛`
+Off work? Same. A black cat, some lo-fi,
+and a few minutes to breathe.
+New songs every other Friday, 9 PM (Taiwan time). 🐈‍⬛`
       },
       {
         label: "IG 簡介（新語氣版）",

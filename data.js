@@ -5,7 +5,7 @@
    （對應方式是每個項目的 id，請不要隨意更改 id）。
    ========================================================= */
 window.MM_DATA = {
-  version: "2026.11.19-1",
+  version: "2026.11.19-3",
   updated: "2026-11-19",
 
   rules: [
@@ -340,7 +340,7 @@ Mellow Meow 第一首歌〈La La〉
             { id: "song2-b3", title: "檢查 Claude 修正後的歌詞影片（v2，戴耳機看對時）", tag: "11/19（四）前・YT", detail: "v2 修正：0:15 Thought by thought 提早；後半段整體重新對時（2:02 Another 延後約 1.5 秒、2:05 Nothing lost 延後、2:10 The rest of the night 多停 1.5 秒、2:13 Another 延後）；每句唱完會預告下一句（跨段落也會顯示）。", steps: ["戴耳機從頭看一次", "重點：0:15、0:28、2:02、2:05、2:10、2:13", "有不對的時間點記下秒數告訴 Claude"] },
             { id: "song2-b6", title: "檢查 Claude 做好的直式短片（Short 和 Reel 共用）", tag: "11/19（四）前・9:16", detail: "Still_On_Short.mp4（18.8 秒、1080×1920）。段落：Then I look up, it's dark outside → 第一段副歌 → But there's a light on down the street。字卡：走出公司 → 天已經黑了 → 還好，燈還亮著。" },
             { id: "song2-b8", title: "上傳並排定首播 11/20（五）21:00", tag: "11/19（四）晚上・YT", detail: "首播前一天排好，觀眾才有時間按「通知我」。", steps: ["YouTube 工作室 → 建立 → 上傳影片", "貼上標題、說明欄、標籤；上傳縮圖", "變造或合成內容：選「是」", "排定時間 → 設為首播 → 11/20（五）21:00"] },
-            { id: "song2-b7", title: "IG 歌詞互動輪播（方向 C）已在 Figma 完成，檢查後匯出 7 張 PNG", tag: "11/22（日）前・IG 4:5", detail: "Figma「Still On_IG便利商店固定款輪播（7 張）」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6086-190 。版面沿用 La La，03–05 換成茶葉蛋、御飯糰、熱美式的情境照片。" },
+            { id: "song2-b7", title: "IG 歌詞互動輪播（下班存檔點・GTA6）已在 Figma 完成，檢查後匯出 7 張 PNG", tag: "11/22（日）前・IG 4:5", detail: "使用新版 Figma「Still On_IG下班存檔點輪播（7 張・GTA6）」：https://www.figma.com/design/6ay6Esf1FewmSOFAs9QgiE/MellowMeow.radio?node-id=6093-569 。03–05 是便利商店、玄關、電視三盞燈的照片。舊的方向 C（便利商店固定款）保留在 6086-190 當備用，不用匯出。" },
           ]
         },
         {
@@ -453,33 +453,37 @@ Mellow Meow 第二首歌〈Still On〉
 完整版在 YouTube（主頁連結）`
         },
         {
-          label: "歌詞互動輪播：方向 C「便利商店的固定款」7 張內容（Figma 已完成）",
+          label: "歌詞互動輪播：「下班存檔點」7 張內容（Figma 定稿）",
           platform: "IG",
-          text: `01｜封面（固定格式）：系列標籤「Still On｜下班固定款」／大字手寫「Still the usual.」／下班走進便利商店，你也是直接拿那一樣嗎？（黑貓：往右滑 →）（照片：夜晚亮著的便利商店）
-02｜原歌詞：So many choices on the shelf / Still the usual for myself
-　　貨架上明明那麼多選擇，最後還是拿了老樣子。→ 轉折：累的時候，連選零食都不想動腦。
-03｜固定款 01｜茶葉蛋派：拿兩顆，一顆現在吃，一顆假裝是明天的早餐。（照片：便利商店的茶葉蛋鍋）
-04｜固定款 02｜御飯糰派：撕包裝那三個步驟，是今天唯一沒出錯的事。（照片：手拿御飯糰）
-05｜固定款 03｜熱美式派：晚上九點還買咖啡，因為今天還沒結束。（照片：手拿咖啡杯，呼應專輯封面）
-06｜換你：Still the usual: ＿＿＿／你下班的固定款是什麼？（黑貓：我先：熱拿鐵＋一顆茶葉蛋）
-07｜頻道介紹（固定格式）：慢喵電台／下班後，給自己一首歌的時間／每隔週五 21:00 新歌／收藏起來，下班路上再聽一次`
+          text: `01｜封面：Still On｜下班存檔點／— MISSION PASSED —／Still On／任務完成：下班，接下來，你希望哪盞燈還亮著？（黑貓：往右滑 →）
+02｜The sky clocked out ahead of me, / There's a light on down the street／天空比我先下班，但街角還有一盞燈 → 上班亮著的是任務，下班亮著的是存檔點。
+03｜01 HP 剩一格的時候… save point: 便利商店的燈｜吃個茶葉蛋，補個血，再回家。
+04｜02 走到家門口的時候… save point: 玄關的燈｜鑰匙一轉，自動存檔，剩餘的體力條，保住了。
+05｜03 洗完澡之後… save point: 電視的燈｜支線任務：今晚只玩一小時。（系統提示：玩家說謊）
+06｜There's a light／下班後，我希望亮著的是 ＿＿＿＿（黑貓：我先：電視的燈，GTA6 終於上市了）／下班後，最期待哪盞燈亮著？留言告訴我，一盞就好
+07｜下班後，給自己一首歌的時間／每隔週五 21:00 新歌，完整版〈Still On〉在 YouTube 主頁／收藏起來，下班路上再聽一次`
         },
         {
-          label: "歌詞互動輪播文案（11/23（一））",
+          label: "歌詞互動輪播文案（11/23（一）21:00，定稿）",
           platform: "IG",
-          text: `So many choices on the shelf,
-still the usual for myself.
+          text: `GTA6 終於上市了，
+但我今天的主線任務，還是：下班。
+
+上班亮著的是任務，
+下班亮著的是存檔點。
 
 〈Still On〉裡有一句：
-貨架上明明那麼多選擇，
-下班走進去，還是拿了老樣子。
+There's a light on down the street.
+天空比我先下班，但街角還有一盞燈。
 
-你的固定款是什麼？留言告訴我 👇
-我先：熱拿鐵＋一顆茶葉蛋
+下班後，你最期待哪盞燈亮著？
+留言告訴我，一盞就好 👇
+我先：電視的燈（今晚只玩一小時，真的）
 
-我會挑幾則寫進下一首歌 ☁️
+💬 你的一句話，可能會被寫進下一首歌
+🎧 完整版〈Still On〉在主頁的 YouTube 連結
 
-#下班 #便利商店 #工作日常 #上班族 #mellowmeow`
+#GTA6 #下班 #工作日常 #上班族 #mellowmeow`
         }
       ]
     },
